@@ -31,18 +31,6 @@ export class AccountComponent {
     this.content = id;
     console.log("переход");
 
-    try {
-      const data = await this.yt.getName("noize mc");
-      if (data.items) {
-        data.items.forEach((element: { id: any }) => { // Исправлено указание типа
-          console.log(element.id.videoId);
-          this.yt_result.push(element.id.videoId)
-        });
-      }
-    } catch (error) {
-      console.error('Ошибка при получении данных:', error);
-    }
-    console.log(this.yt_result)
   }
 
   Log() {

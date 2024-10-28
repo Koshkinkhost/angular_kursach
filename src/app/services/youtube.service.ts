@@ -6,6 +6,7 @@ import { response } from 'express';
 })
 export class YoutubeService {
   private google_api: string = 'AIzaSyCaEPuB0AaQXHcNhZizQ_f13EFsZWZHj90';
+  private lastfm_api:string='49b7daeef42c58b20fdcc06b0cfacc86';
 
   constructor() { }
 
@@ -23,6 +24,7 @@ export class YoutubeService {
   }
 
   async getName(query: string): Promise<any> {
+    console.log(query)
     try {
       const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${this.google_api}`);
       if (!response.ok) {
