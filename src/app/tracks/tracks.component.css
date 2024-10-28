@@ -1,0 +1,42 @@
+*{
+    color:white;
+}
+
+.artist-tracks {
+    font-family: Arial, sans-serif;
+   
+  }
+  
+  .artist-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .artist-photo {
+    border-radius: 10%;
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+  }
+  
+  .tracks-list h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .track-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  

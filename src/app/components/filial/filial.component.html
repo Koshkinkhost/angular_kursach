@@ -1,0 +1,31 @@
+<div class="branch-info">
+    <h2>Студия {{title}}</h2>
+    <div class="branch-details">
+        <div class="branch-address">
+            <h3>Адрес</h3>
+            <p>ул. {{street}},{{build}}</p>
+            <p>г. Москва, Россия</p>
+        </div>
+        <div class="branch-contact">
+            <h3>Контакты</h3>
+            <p>Телефон: <a href="tel:+1234567890">{{phone_num}}</a></p>
+            <p>Email: <a href="mailto:info@example.com">{{email}}</a></p>
+        </div>
+        <div class="branch-hours">
+            <h3>Часы работы</h3>
+            <p>Пн-Пт: 9:00 - 18:00</p>
+            <p>Сб: 10:00 - 14:00</p>
+            <p>Вс: Выходной</p>
+        </div>
+    </div>
+    <div class="branch-map">
+        <div >
+            <a href="javascript:void(0)"  (click)="getLocation()">{{info}}</a>
+            @if(visible){
+                <img style="margin: 20px;" src="{{source}}">
+            }
+        </div>
+        
+        
+    </div>
+</div>

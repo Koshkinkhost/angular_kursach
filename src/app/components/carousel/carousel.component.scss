@@ -1,0 +1,44 @@
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  
+  padding: 10px; /* Добавляем отступы для контейнера */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавляем тень для контейнера */
+}
+
+.marquee {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content {
+  display: inline-block;
+}
+
+.marquee-item {
+  width: 30%;
+  display: inline-block;
+  padding: 10px 20px; /* Увеличиваем отступы для элементов */
+  margin: 0 10px; /* Добавляем отступы между элементами */
+  background-color: #f0f0f0; /* Добавляем фон для элементов */
+  border-radius: 5px; /* Добавляем скругление углов для элементов */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Добавляем плавный переход для фона */
+  text-align: center; /* Выравниваем текст по центру */
+  font-size: 16px; /* Устанавливаем размер шрифта */
+  color: #333; /* Устанавливаем цвет текста */
+}
+
+.marquee-item:hover {
+  background-color: #ddd; /* Изменяем фон при наведении */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

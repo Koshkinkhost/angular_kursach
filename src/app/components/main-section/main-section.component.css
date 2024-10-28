@@ -1,0 +1,113 @@
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid #000;
+}
+
+.marquee {
+    width:100%;
+    display: inline-block;
+    animation: marquee 10s linear infinite;
+}
+
+.marquee span {
+    display: inline-block;
+    padding-right: 100%; /* Для создания бесконечного эффекта */
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+.main{
+    width: 100%;
+    padding:10px;
+    background-color:#2C2C2C; 
+    height: 100%;
+    box-sizing: border-box;
+    
+}
+
+.for_items{
+    width: 100%;
+    height: auto;
+    display: flex;
+
+   
+  
+    justify-content: space-between;
+   
+}
+.section-title {
+    font-size: 2.5rem;
+    width: 100%;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    position: relative;
+    transition: color 1s ease-in-out;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background-color: #FF6B6B;
+        margin: 10px auto 0;
+    }
+
+    &:hover {
+        color: #f0bc95; /* Цвет текста при наведении */
+        cursor: pointer;
+    }
+}
+.item{
+
+   width: 30%;
+  height:auto;
+    font-size: 18px;
+   text-overflow: ellipsis;
+    color:rgb(241, 243, 244);
+    word-break: break-all;
+   display: flex;
+   justify-content:flex-start;
+   
+   flex-direction: column;
+ align-items: stretch;
+    padding: auto;
+    text-overflow: none;
+
+}
+
+.item img{
+    width:10vw;
+    height: 10vw;
+    border-radius: 80px;
+    flex-shrink: 0;
+    flex-grow: 0;
+   object-fit: cover;
+border: 3px solid #ffffff;
+box-shadow: 0px 0px 0.5vw 0.2vw #FF6B6B;
+}
+.item h2{
+    word-break: break-word;
+    text-align: center;
+}
+@media (max-width:800px) {
+    .for_items{
+       
+      height: auto;
+       display: flex;
+       flex-direction: column;
+       
+        
+    }
+    .item{
+        width: 100%;
+    }
+    
+}

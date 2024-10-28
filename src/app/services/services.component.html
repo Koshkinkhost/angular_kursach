@@ -1,0 +1,16 @@
+<div class="main">
+    <div class="container">
+        @for (item of products; track item.id) {
+       <app-card (click)="show_product(item)" [service]="item"></app-card>
+        } @empty {
+        <li>There are no items.</li>
+        }
+
+
+      
+    </div>
+    @if(isModalOpen){
+        <app-modal (close)="closeModal()"></app-modal>
+    }
+   
+</div>

@@ -1,0 +1,21 @@
+.main {
+
+    height: 100%;
+   
+    display: flex; /* Включаем flexbox для выравнивания по центру */
+    justify-content: flex-start; /* Центрируем по горизонтали */
+    
+    
+    
+}
+.container{
+    width: 100%;
+   
+    height:auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 20px;
+    gap:40px;   
+    
+}
