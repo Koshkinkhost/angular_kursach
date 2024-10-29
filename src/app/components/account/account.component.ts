@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { Users } from './Users';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { YoutubeService } from '../../services/youtube.service';
-import { TracksComponent } from '../../tracks/tracks.component';
 
+import { TracksComponent } from '../../tracks/tracks.component';
+import { ArtistBioComponent } from '../../artist-bio/artist-bio.component';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [FormsModule,TracksComponent],
+  imports: [FormsModule,TracksComponent,ArtistBioComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'] // Исправлено на 'styleUrls'
 })
 export class AccountComponent {
+
   content: number = 0;
   isLogin: boolean = true;
   us_log: string = '';
@@ -25,7 +26,7 @@ export class AccountComponent {
     { login: 'boris', password: '11' }
   ];
 
-  constructor(private yt: YoutubeService) {}
+
 
   async changeBlock(id: number) {
     this.content = id;
