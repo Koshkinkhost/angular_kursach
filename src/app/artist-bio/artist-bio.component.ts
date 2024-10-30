@@ -1,5 +1,7 @@
 import { Component,Input } from '@angular/core';
 import { LastFmService } from '../last-fm.service';
+import { Artist } from '../components/Artist';
+import { listeners } from 'process';
 
 @Component({
   selector: 'app-artist-bio',
@@ -11,7 +13,10 @@ import { LastFmService } from '../last-fm.service';
 export class ArtistBioComponent {
   constructor(private last:LastFmService){}
 @Input() name!:string;
-ngOnInit(){
-this.last.find_artist(this.name);
+artist:Artist={name:this.name,listeners:'',playCount:'',similar:[]}
+async ngOnInit(){
+const data=await this.last.find_artist(this.name);
+console.log(data.artist.bio.name);
+this.artist.listeners;
 }
 }

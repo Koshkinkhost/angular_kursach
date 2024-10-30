@@ -9,6 +9,6 @@ export class LastFmService {
   constructor() { }
   async find_artist(name:string){
     const response=await fetch(`${this.baseUrl}?method=artist.getinfo&artist=${encodeURIComponent(name)}&api_key=${this.lastfm_api}&format=json`)
-    console.log(response.json())
+   return response.json()
   }
 }

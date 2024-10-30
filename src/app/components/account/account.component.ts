@@ -23,8 +23,14 @@ export class AccountComponent {
   confirm_password: string = '';
   yt_result: string[] = [];
   users: Users[] = [
-    { login: 'boris', password: '11' }
+   
   ];
+   ngOnInit(){
+    const users_str=localStorage.getItem('users');
+    if(users_str)
+    this.users=JSON.parse(users_str)
+  console.log(this.users)
+   }
 
 
 
@@ -35,8 +41,8 @@ export class AccountComponent {
   }
 
   Log() {
-    const user = this.users.find(u => u.login === this.us_log && u.password === this.us_password);
-
+    
+ const user=0;
     if (user != null) {
       alert("вы зашли");
       this.name = this.us_log;
@@ -56,6 +62,8 @@ change(){
   Registration() {
     if (this.confirm_password === this.us_password) {
       this.users.push({ login: this.us_log, password: this.us_password });
+      localStorage.setItem('users',JSON.stringify(this.users))
+      console.log(localStorage.getItem('users'))
       this.isLogin = true;
       this.us_log = '';
       this.us_password = '';
