@@ -2,18 +2,17 @@ import { Component } from '@angular/core';
 import { Users } from './Users';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
 import { TracksComponent } from '../../tracks/tracks.component';
 import { ArtistBioComponent } from '../../artist-bio/artist-bio.component';
+
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [FormsModule,TracksComponent,ArtistBioComponent],
+  imports: [FormsModule, TracksComponent, ArtistBioComponent],
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css'] // Исправлено на 'styleUrls'
+  styleUrls: ['./account.component.css']
 })
 export class AccountComponent {
-
   content: number = 0;
   isLogin: boolean = true;
   us_log: string = '';
@@ -22,28 +21,22 @@ export class AccountComponent {
   us_password: string = '';
   confirm_password: string = '';
   yt_result: string[] = [];
-  users: Users[] = [
-   
-  ];
-   ngOnInit(){
-    const users_str=localStorage.getItem('users');
-    if(users_str)
-    this.users=JSON.parse(users_str)
-  console.log(this.users)
-   }
+  users: Users[] = [];
 
-
+  ngOnInit() {
+    const savedUsers = localStorage.getItem('users');
+    this.users = savedUsers ? JSON.parse(savedUsers) : [];
+    console.log(this.users);
+  }
 
   async changeBlock(id: number) {
     this.content = id;
     console.log("переход");
-
   }
 
   Log() {
-    
- const user=0;
-    if (user != null) {
+    const user = this.users.find(user => user.login === this.us_log && user.password === this.us_password);
+    if (user) {
       alert("вы зашли");
       this.name = this.us_log;
       this.us_log = '';
@@ -53,23 +46,28 @@ export class AccountComponent {
     }
     alert("такого пользователя нет");
   }
-change(){
-  this.us_log = '';
-  this.us_password = '';
-  this.confirm_password = ''
-  this.isLogin = !this.isLogin;
-}
+
+  change() {
+    this.us_log = '';
+    this.us_password = '';
+    this.confirm_password = '';
+    this.isLogin = !this.isLogin;
+  }
+
   Registration() {
     if (this.confirm_password === this.us_password) {
-      this.users.push({ login: this.us_log, password: this.us_password });
-      localStorage.setItem('users',JSON.stringify(this.users))
-      console.log(localStorage.getItem('users'))
-      this.isLogin = true;
-      this.us_log = '';
-      this.us_password = '';
-      this.confirm_password = ''; // Очищаем confirm_password после регистрации
+        let keys = Object.keys(localStorage);
+        if (!keys.includes(this.us_log)) {
+            this.users.push({ login: this.us_log, password: this.us_password });
+            localStorage.setItem('users', JSON.stringify(this.users));
+        }
+        console.log(localStorage.getItem('users'));
+        this.isLogin = true;
+        this.us_log = '';
+        this.us_password = '';
+        this.confirm_password = ''; // Clear confirm_password after registration
     } else {
-      alert("пароли не совпадают");
+        alert("пароли не совпадают");
     }
-  }
+}
 }

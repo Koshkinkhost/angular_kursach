@@ -3,7 +3,7 @@
     <div class="artist-header">
       <img>
       <div class="artist-info">
-        <h2>{{name}}</h2>
+        <h2>{{name}} </h2>
         <h4></h4>
         <p></p>
       </div>
@@ -18,15 +18,24 @@
     <!-- Достижения и популярные треки -->
     <div class="artist-stats">
       <div class="achievement">
-        <h4></h4>
-        <p></p>
+        @if(artist){
+            <h4>Количество прослушиваний</h4>
+            <p>{{artist.playCount}}</p>
+        }
+        <h4>Количество слушателей</h4>
+        <p>{{artist.listeners}}</p>
       </div>
       <div >
         <h4></h4>
         <p></p>
       </div>
     </div>
-  
+  <p>Похожие исполнители</p>
+  @for(item of artist.similar; track $index){
+    <div>
+        {{item}}
+    </div>
+  }
     <!-- Социальные сети -->
     <div class="artist-social-links">
       <a >
