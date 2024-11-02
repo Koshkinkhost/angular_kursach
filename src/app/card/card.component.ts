@@ -1,5 +1,5 @@
 import { Component,Input } from '@angular/core';
-import { Product } from './../services/Product';
+import { Artist } from '../components/Artist';
 @Component({
   selector: 'app-card',
   standalone: true,
@@ -8,5 +8,5 @@ templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
 export class CardComponent {
-@Input() service!:Product;
+@Input() artist!:Artist;
 }

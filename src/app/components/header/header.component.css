@@ -79,9 +79,10 @@ a:hover {
 }
 
 .menu a {
-    color: black;
+    color: rgb(250, 248, 248);
     font-size: 18px;
     margin-top: 10px;
+    text-shadow: none;
 }
 
 .contact {
@@ -135,18 +136,17 @@ a:hover {
     margin-right: 10px;
 }
 
-@media (max-width: 980px) {
-    .title {
-        display: none;
-    }
+@media (max-width: 1075px) {
+    
     .burger {
         display: block;
     }
-    .container{
+    .contact{
         display: none;
     }
+    
 }
-@media (max-width: 600px) {
+@media (max-width: 880px) {
     .title {
         display: none;
     }
