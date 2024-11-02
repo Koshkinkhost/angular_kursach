@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainSectionComponent } from './components/main-section/main-section.component';
-import { ServicesComponent } from './components/services/services.component';
+import { ServicesComponent } from './services/services.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { DescriptionComponent } from './components/description/description.component';

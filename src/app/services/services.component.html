@@ -1,7 +1,7 @@
 <div class="main">
     <div class="container">
         @for (item of artists; track $index) {
-       <app-card (click)="show_product(item)" [service]="item"></app-card>
+       <app-card (click)="show_product(item)" [artist]="item"></app-card>
         } @empty {
         <li>There are no items.</li>
         }

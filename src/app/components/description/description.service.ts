@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../services/Product';
+import { Artist } from '../Artist';
 @Injectable({
   providedIn: 'root'
 })
 export class DescriptionService {
-prod:Product[]=[]
+prod:Artist[]=[]
     constructor() { }
-    getinfo(data:Product[],id:number):Product|undefined{ 
+    getinfo(data:Artist[],id:string):Artist|undefined{ 
   
   const product=data.find(d=>d.id===id)
   console.log(product)

@@ -5,14 +5,16 @@ import { RouterOutlet } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { CardComponent } from '../components/card/card.component';
-import { DescriptionService } from '../components/description/description.service';
+
 import { Artist } from '../components/Artist';
 import { EventDispatcher } from '@angular/core/primitives/event-dispatch';
 import { ModalComponent } from '../components/modal/modal.component';
+import { LastFmService } from '../last-fm.service';
 
 @Component({
   selector: 'app-services',
   standalone: true,
+
   imports: [CommonModule,RouterOutlet,RouterLinkActive,RouterLink,CardComponent,ModalComponent],
 templateUrl: './services.component.html',
   styleUrls: ['./services.component.css']
@@ -30,8 +32,11 @@ export class ServicesComponent {
   }
   @Output() button_clicked=new EventEmitter<Artist>();
   
+ artists:Artist[]=[];
+ constructor(private route:Router,private last:LastFmService){
+  this.artists=this.last.artists;
+ }
  
- constructor(private route:Router){}
 
 
  show_product(artist:Artist){
