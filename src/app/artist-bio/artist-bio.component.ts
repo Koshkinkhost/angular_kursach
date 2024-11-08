@@ -20,15 +20,16 @@ if(data){
   console.log(data.artist);
   this.artist.listeners=data.artist.stats.listeners;
   this.artist.playCount=data.artist.stats.playcount;
-  this.artist.similar=data.artist.similar.artist;
+  
   this.artist.id=data.artist.mbid;
   console.log("mbid - "+this.artist.id)
   this.artist.registr_date=data.artist.bio.published;
   console.log( this.artist.listeners);
-  for(let i=0;i<this.artist.similar.length;i++){
-    console.log(this,this.artist.similar[i]);
+  for(let i=0;i<data.artist.similar.artist.length;i++){
+    this.artist.similar.push(data.artist.similar.artist[i].name)
+    
   }
-  this.last.artists.push(this.artist);
+  
 }
 
 }

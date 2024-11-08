@@ -1,42 +1,61 @@
-*{
-    color:white;
+.artist-top-tracks {
+  padding: 40px 20px;
+  max-width: 100%;  /* Делает блок по ширине экрана */
+  margin: 0 auto;
+
+  border-radius: 8px;
+  width:900px;
+  flex-shrink: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.artist-tracks {
-    font-family: Arial, sans-serif;
-   
+.artist-top-tracks h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #fdfbfb;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;  /* Все элементы будут в колонку */
+  gap: 20px;  /* Расстояние между элементами */
+}
+
+.track-item {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.track-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.track-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.track-listeners {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1024px) {
+  .track-list {
+    gap: 15px;  /* Немного уменьшаем расстояние на планшетах */
   }
-  
-  .artist-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .track-list {
+    gap: 10px;  /* Уменьшаем расстояние на мобильных */
   }
-  
-  .artist-photo {
-    border-radius: 10%;
-    width: 100px;
-    height: 100px;
-    margin-right: 15px;
-  }
-  
-  .tracks-list h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-  
-  .track {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .track-controls button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-  
+}

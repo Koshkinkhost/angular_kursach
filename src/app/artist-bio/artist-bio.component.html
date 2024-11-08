@@ -1,49 +1,30 @@
 <div class="artist-bio">
-    <!-- Основная информация -->
-    <div class="artist-header">
-      <img>
+  <!-- Основная информация -->
+  <div class="artist-header">
+      
       <div class="artist-info">
-        <h2>{{name}} </h2>
-        <h4></h4>
-        <p></p>
+          <h2>{{name}}</h2>
       </div>
-    </div>
-  
-    <!-- Краткая биография -->
-    <div class="artist-bio-details">
-      <h3></h3>
-      <p></p>
-    </div>
-  
-    <!-- Достижения и популярные треки -->
-    <div class="artist-stats">
-      <div class="achievement">
-        @if(artist){
-            <h4>Количество прослушиваний</h4>
-            <p>{{artist.playCount}}</p>
-        }
-        <h4>Количество слушателей</h4>
-        <p>{{artist.listeners}}</p>
-      </div>
-      <div >
-        <h4></h4>
-        <p></p>
-      </div>
-    </div>
-  <p>Похожие исполнители</p>
-  @for(item of artist.similar; track $index){
-    <div>
-        {{item}}
-    </div>
-  }
-    <!-- Социальные сети -->
-    <div class="artist-social-links">
-      <a >
-        <i ></i>
-      </a>
-    </div>
-  
-    <!-- Кнопка редактирования -->
-    <button class="edit-button">Edit Bio</button>
   </div>
-  
+
+  <!-- Достижения и популярные треки -->
+  <div class="artist-stats">
+      <div class="achievement">
+          <h4>Listen Count</h4>
+          <p>{{artist.playCount}}</p>
+      </div>
+      <div class="achievement">
+          <h4>Listener Count</h4>
+          <p>{{artist.listeners}}</p>
+      </div>
+  </div>
+
+  <!-- Похожие исполнители -->
+  <h3>Similar Artists</h3>
+  <div class="similar-artists">
+      @for(item of artist.similar; track $index) {
+          <div class="artist-item">{{item}}</div>
+      }
+  </div>
+
+</div>
