@@ -2,6 +2,7 @@ body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: #f3f6fa;
     color: #163D60;
+    
 }
 
 .main {
@@ -86,12 +87,13 @@ body {
 .info {
     width: 70%;
     height: auto;
+    min-width: 50%;
     background-color: transparent; /* Прозрачный фон */
     border-radius: 10px;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     box-sizing: border-box;
     margin-left: 20px;
     
