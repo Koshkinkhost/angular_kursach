@@ -6,9 +6,10 @@
 }
 
 .marquee {
-    width:100%;
+    background-color: #FF6B6B;
+    width:200%;
     display: inline-block;
-    animation: marquee 10s linear infinite;
+    animation: marquee 20s linear infinite;
 }
 
 .marquee span {
