@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Users } from './Users';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { TracksComponent } from '../../tracks/tracks.component';
+import { TracksComponent } from '../tracks/tracks.component';
 import { ArtistBioComponent } from '../../artist-bio/artist-bio.component';
 
 @Component({

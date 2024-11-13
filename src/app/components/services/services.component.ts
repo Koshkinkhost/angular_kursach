@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { CardComponent } from '../components/card/card.component';
+import { CardComponent } from '../card/card.component';
 
-import { Artist } from '../components/Artist';
+import { Artist } from '../Artist';
 import { EventDispatcher } from '@angular/core/primitives/event-dispatch';
-import { ModalComponent } from '../components/modal/modal.component';
-import { LastFmService } from '../last-fm.service';
+import { ModalComponent } from '../modal/modal.component';
+import { LastFmService } from '../../last-fm.service';
 
 @Component({
   selector: 'app-services',

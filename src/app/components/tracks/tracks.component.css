@@ -2,7 +2,7 @@
   padding: 40px 20px;
   max-width: 100%;  /* Делает блок по ширине экрана */
   margin: 0 auto;
-width:100%;
+width:60vw;
   border-radius: 8px;
   
   flex-shrink: 1;

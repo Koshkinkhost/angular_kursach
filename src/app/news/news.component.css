@@ -1,0 +1,89 @@
+/* Обертка для всего компонента */
+.news-wrapper {
+    width: 100%;
+    padding: 20px;
+    background-color: #2C2C2C;
+  }
+  
+  /* Стиль для заголовка */
+  .news-title {
+    font-size: 2.5rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    position: relative;
+    transition: color 1s ease-in-out;
+  }
+  
+  .news-title::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #FF6B6B;
+    margin: 10px auto 0;
+  }
+  
+  .news-title:hover {
+    color: #f0bc95;
+    cursor: pointer;
+  }
+  
+  /* Стиль для списка новостей */
+  .news-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  /* Стиль для каждой новости */
+  .news-item {
+    background: linear-gradient(135deg, #ff6b6b, #ffcc33);
+    flex: 1 0 calc(33.33% - 20px); /* Три колонки, с отступами */
+    height: auto;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .news-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  .news-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    transition: color 0.3s ease;
+  }
+  
+  .news-item a:hover {
+    color: #FF6B6B;
+  }
+  
+  /* Медиа запросы для мобильных устройств */
+  @media (max-width: 800px) {
+    .news-item {
+      flex: 1 0 calc(50% - 20px); /* Две колонки для маленьких экранов */
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .news-item {
+      flex: 1 0 100%; /* Одна колонка для очень маленьких экранов */
+    }
+  }
+  

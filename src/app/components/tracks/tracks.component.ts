@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { LastFmService } from '../last-fm.service';
+import { LastFmService } from '../../last-fm.service';
 import { Track } from './Track';
 
 @Component({

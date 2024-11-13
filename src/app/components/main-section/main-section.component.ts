@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { StrokaComponent } from '../../stroka/stroka.component';
+import { Component,OnInit } from '@angular/core';
+import { StrokaComponent } from '../stroka/stroka.component';
+import { LastFmService } from '../../last-fm.service';
 @Component({
   selector: 'app-main-section',
   standalone: true,
@@ -8,5 +9,8 @@ import { StrokaComponent } from '../../stroka/stroka.component';
   styleUrl: './main-section.component.css'
 })
 export class MainSectionComponent {
-
+constructor (private LastFm:LastFmService ){}
+async ngOnInit(){
+  console.log(this.LastFm.TopChart());
+}
 }

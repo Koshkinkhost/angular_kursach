@@ -96,6 +96,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     margin-left: 20px;
+    overflow: hidden;
     
 }
 

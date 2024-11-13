@@ -55,4 +55,8 @@ export class LastFmService {
     const response=await fetch(`${this.baseUrl}?method=artist.gettoptracks&artist=${name}&api_key=${this.lastfm_api}&format=json`)
     return response.json()
   }
+  async TopChart(){
+    const response=await fetch(`${this.baseUrl}?method=chart.gettoptracks&api_key=${this.lastfm_api}&format=json`)
+    return response.json()
+  }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StrokaComponent } from '../../stroka/stroka.component';
+import { StrokaComponent } from '../stroka/stroka.component';
 import { MainSectionComponent } from '../main-section/main-section.component';
 @Component({
   selector: 'app-home',
