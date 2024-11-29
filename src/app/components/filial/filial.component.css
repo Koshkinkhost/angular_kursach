@@ -45,6 +45,11 @@
   .branch-map iframe {
     border-radius: 8px;
   }
-  .branch-map a{
+  .branch-map p{
     color:#fa6f05 ;
+    width:80px;
+    cursor: pointer;
+  }
+  .branch-map p:hover{
+    text-decoration: underline;
   }

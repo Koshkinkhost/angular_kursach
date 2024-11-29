@@ -33,9 +33,13 @@ export class ServicesComponent {
   @Output() button_clicked=new EventEmitter<Artist>();
   
  artists:Artist[]=[];
+ key:string="gRZ2pWZY-MFYQ1tUVnG_Gb7u4ZnabITvRj6jPf7OVuI";
+
  constructor(private route:Router,private last:LastFmService){
   this.artists=this.last.artists;
  }
+ query:string="Noize MC фото"
+
  
 
 

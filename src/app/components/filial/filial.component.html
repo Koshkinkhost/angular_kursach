@@ -20,7 +20,7 @@
     </div>
     <div class="branch-map">
         <div >
-            <p  style="color:aqua;cursor: pointer;"  (click)="getLocation()">{{info}}</p>
+            <p     (click)="getStaticMapUrl()">{{info}}</p>
             @if(visible){
                 <img style="margin: 20px;" src="{{source}}">
             }

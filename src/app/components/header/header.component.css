@@ -113,9 +113,9 @@ a:hover {
     margin-left: 4vw; /* Добавляем отступ слева */
 }
 .order button:hover{
-    background-color: #FF6B6B; /* Яркий акцентный цвет */
+    background-color: #ff6b6b6b; /* Яркий акцентный цвет */
     color: white;
-    border-color: #FF6B6B; 
+    border-color: #0a0a0a; 
 }
 .order button {
     width: 100px;

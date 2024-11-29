@@ -5,7 +5,11 @@ import { Artist } from './components/Artist';
 })
 export class LastFmService {
    baseUrl:string = 'http://ws.audioscrobbler.com/2.0/';
+   ident_catalog:string='aje77vap5p80l9dh3saf';
+   private key: string = 'AQVNxz_VkuUAqlsR8U95eGIq_TcIpcWYn0oAS6zv'; // Замените на ваш API-ключ
    private lastfm_api:string='49b7daeef42c58b20fdcc06b0cfacc86';
+    google_api:string="AIzaSyCaEPuB0AaQXHcNhZizQ_f13EFsZWZHj90"
+ search_id:string="555f0391cc25c4c3b"
    artists:Artist[]=[{
     id: "1",
     name: "Radiohead",
@@ -24,7 +28,7 @@ export class LastFmService {
 },
 {
     id: "3",
-    name: "Kendrick Lamar",
+    name: "Noize MC",
     listeners: "54321098",
     playCount: "987654321",
     similar: ["J. Cole", "Drake", "Jay-Z"],
@@ -60,4 +64,17 @@ export class LastFmService {
     
     return response.json()
   }
-}
+  async getPhoto(a:string){
+    
+
+  
+  }
+  async find_photo(query:string):Promise<any>{
+  
+    const response = await fetch(
+      `https://www.googleapis.com/customsearch/v1?q=${query}&searchType=image&key=${this.google_api}&cx=${this.search_id}`
+    );
+   
+    return response.json()
+   }
+ }

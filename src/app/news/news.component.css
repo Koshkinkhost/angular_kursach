@@ -26,6 +26,9 @@
     background-color: #FF6B6B;
     margin: 10px auto 0;
   }
+  .section-title{
+    color:white;
+  }
   
   .news-title:hover {
     color: #f0bc95;
@@ -45,7 +48,7 @@
     background: linear-gradient(135deg, #ff6b6b, #ffcc33);
     flex: 1 0 calc(33.33% - 20px); /* Три колонки, с отступами */
     height: auto;
-    border-radius: 8px;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,7 +60,7 @@
   }
   
   .news-item:hover {
-    transform: scale(1.05);
+    transform: scaleY(1.01);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
   }
   

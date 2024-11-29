@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-filial',
@@ -20,57 +20,31 @@ export class FilialComponent {
   @Input() email!: string;
   @Input() street!: string;
   @Input() build!: string;
+  @Input() lat!:number;
+  @Input() long!:number;
 
   public visible: boolean = false;
   public info: string = 'На карте';
 
-  async getLocation() {
-    // Сбрасываем сообщения об ошибках
-    this.errorMessage = '';
-    this.loading = true;
-
-    try {
-      // Формируем запрос к геокодеру
-      const response = await fetch(
-        `${this.geocoderUrl}?apikey=${this.key}&geocode=${encodeURIComponent(this.street + ',' + this.build)}&format=json`
-      );
-
-      if (!response.ok) {
-        throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log('Геокодирование:', data);
-
-      // Проверяем наличие геообъектов
-      const geoObjects = data.response.GeoObjectCollection.featureMember;
-      if (geoObjects.length === 0) {
-        throw new Error('Адрес не найден');
-      }
-
-      // Извлекаем координаты
-      const coordinates = geoObjects[0].GeoObject.Point.pos.split(' ').reverse();
-      const [latitude, longitude] = coordinates;
-
-      // Формируем URL статической карты
-      const mapUrl = `${this.staticApiUrl}?ll=${longitude},${latitude}&size=450,450&z=16&l=map&pt=${longitude},${latitude},pm2rdm&apikey=${this.key}`;
-      console.log('URL статической карты:', mapUrl);
-
-      this.source = mapUrl;
-      this.visible = true;
-      this.info = 'Скрыть';
-    } catch (error: any) {
-      // Обработка ошибок
-      console.error('Ошибка при получении данных:', error.message || error);
-      this.errorMessage = error.message || 'Неизвестная ошибка';
-    } finally {
-      this.loading = false;
-    }
+  getStaticMapUrl(): void {
+    console.log("зашел!!!!");
+  
+    // Координаты для Арбат, 13
+    
+  
+    const baseUrl = 'https://static-maps.yandex.ru/1.x/';
+    const data = `${baseUrl}?ll=${this.long},${this.lat}&z=17&size=600,400&l=map&pt=${this.long},${this.lat},pm2rdm&apikey=${this.key}`;
+  
+    this.source = data;
+    this.visible = !this.visible;
+    this.info = this.visible ? 'Скрыть' : 'На карте';
+    console.log(this.source);
   }
+  
+  
 
   toggleMap() {
     // Переключение видимости карты
-    this.visible = !this.visible;
-    this.info = this.visible ? 'Скрыть' : 'На карте';
+  
   }
 }
