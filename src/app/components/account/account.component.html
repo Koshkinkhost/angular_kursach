@@ -4,10 +4,17 @@
           <img src="consult.png">
           <span>{{name}}</span>
       </div>
-      <div (click)="changeBlock(1)" id="1" class="part"><a (click)="changeBlock(1)">Войти</a></div>
+      @if(!access){
+        <div (click)="changeBlock(1)" id="1" class="part"><a (click)="changeBlock(1)">Войти</a></div>
+      }
+     
       <div (click)="changeBlock(2)" id="2" class="part"><a (click)="changeBlock(2)">Треки</a></div>
       <div (click)="changeBlock(3)" id="3" class="part"><a (click)="changeBlock(3)">Аналитика</a></div>
       <div (click)="changeBlock(4)" id="4" class="part"><a (click)="changeBlock(4)">Промокоды</a></div>
+      @if(access){
+        <div (click)="Logout()" id="5" class="part"><a (click)="changeBlock(4)">Выход</a></div>
+      }
+      
   </div>
   <div class="info">
       @if(content == 1) {
@@ -29,7 +36,7 @@
                       </form>
                   }
                   @else {
-                      <form id="LoginForm" class="form_log" (ngSubmit)="Registration()">
+                      <form id="RegForm" class="form_log" (ngSubmit)="Registration()">
                           <h1 style="color:white;">Регистрация</h1>
                           <div class="form-group">
                               <label style="color:white;" for="email">Никнейм артиста</label>
