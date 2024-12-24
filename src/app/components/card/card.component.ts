@@ -21,6 +21,7 @@ export class CardComponent implements OnInit {
     const cachedImages = localStorage.getItem("artistImages");
     if (cachedImages) {
       this.images = JSON.parse(cachedImages);
+     
     }
 
     const cachedImage = this.images.find(u => u.name === this.artist.name);

@@ -1,77 +1,32 @@
 <div class="main">
-  <div class="menu">
+    <div class="menu">
       <div class="profile">
-          <img src="consult.png">
-          <span>{{name}}</span>
+        <img src="consult.png">
+        <span>{{ name }}</span>
       </div>
-      @if(!access){
-        <div (click)="changeBlock(1)" id="1" class="part"><a (click)="changeBlock(1)">Войти</a></div>
+      @if(!access) {
+        <div (click)="changeBlock('login')" id="1" class="part">
+          <a>Войти</a>
+        </div>
       }
+      @if(access) {
+      <div (click)="changeBlock('tracks')" id="2" class="part">
+        <a>Треки</a>
+      </div>
+      <div (click)="changeBlock('tracks')"  id="3" class="part">
+        <a>Аналитика</a>
+      </div>
+      <div  (click)="changeBlock('promocodes')" id="4" class="part">
+        <a>Промокоды</a>
+      </div>
+    
+        <div (click)="logout()" id="5" class="part">
+          <a>Выход</a>
+        </div>
+      }
+    </div>
+    <div class="info">
+       <app-switch-menu [currentComponent]="currentComponent"></app-switch-menu>
      
-      <div (click)="changeBlock(2)" id="2" class="part"><a (click)="changeBlock(2)">Треки</a></div>
-      <div (click)="changeBlock(3)" id="3" class="part"><a (click)="changeBlock(3)">Аналитика</a></div>
-      <div (click)="changeBlock(4)" id="4" class="part"><a (click)="changeBlock(4)">Промокоды</a></div>
-      @if(access){
-        <div (click)="Logout()" id="5" class="part"><a (click)="changeBlock(4)">Выход</a></div>
-      }
-      
+    </div>
   </div>
-  <div class="info">
-      @if(content == 1) {
-          <div class="login">
-              @if(!access) {
-                  @if(isLogin) {
-                      <form id="LoginForm" class="form_log" (ngSubmit)="Log()">
-                          <h1 style="color:white;">Вход</h1>
-                          <div class="form-group">
-                              <label style="color:white;" for="email">Никнейм артиста</label>
-                              <input [(ngModel)]="us_log" type="text" id="email" name="email" required>
-                          </div>
-                          <div class="form-group">
-                              <label style="color:white;" for="passw">Пароль</label>
-                              <input [(ngModel)]="us_password" type="password" id="passw" name="pass" required>
-                          </div>
-                          <button class="btn" type="submit">Войти</button>
-                          <a href="javascript:void()" (click)="change()">Зарегистрироваться</a>
-                      </form>
-                  }
-                  @else {
-                      <form id="RegForm" class="form_log" (ngSubmit)="Registration()">
-                          <h1 style="color:white;">Регистрация</h1>
-                          <div class="form-group">
-                              <label style="color:white;" for="email">Никнейм артиста</label>
-                              <input [(ngModel)]="us_log" type="text" id="email" name="email" required>
-                          </div>
-                          <div class="form-group">
-                              <label style="color:white;" for="password_1">Пароль</label>
-                              <input [(ngModel)]="us_password" type="password" id="password_1" name="password_1" required>
-                          </div>
-                          <div class="form-group">
-                              <label style="color:white;" for="passw_reg">Подтвердите пароль</label>
-                              <input [(ngModel)]="confirm_password" type="password" id="passw_reg" name="passw_reg" required>
-                          </div>
-                          <button class="btn" type="submit">Зарегистрироваться</button>
-                          <a (click)="change()">Вход</a>
-                      </form>
-                  }
-              }
-              @else {
-                  <app-artist-bio [name]="name"></app-artist-bio>
-              }
-          </div>
-      }
-      @if(content == 2 && access) {
-          <app-tracks [name]="name"></app-tracks>
-      }
-      @if(content == 3 && access) {
-           
-          <!-- Добавьте содержимое для блока аналитики -->
-      }
-      @if(content == 4 && access) {
-          <div>block 4</div>
-      }
-      @if(content != 1 && !access) {
-          <div>войдите</div>
-      }
-  </div>
-</div>

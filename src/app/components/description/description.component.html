@@ -1,17 +1,24 @@
+<div class="main">
+    <div class="containerr">
+        <!-- Верхняя часть: фото, слушатели и прослушивания -->
+        <div class="top-section">
+            <div class="photo">
+                <img src="{{artist_photo}}" alt="Фото артиста">
+            </div>
+            <div class="stats">
+                <h2 class="name">{{selectedArtist?.name}}</h2>
+                <p class="listeners">Слушателей: {{selectedArtist?.listeners}}</p>
+                <p class="play-count">Прослушиваний: {{selectedArtist?.playCount}}</p>
+            </div>
+        </div>
 
-<div class="main" >
-    <div class="container">
-    <div class="container_product">
-        
        
-        <p class="desc">{{selectedArtist?.name}}</p>
-        <p class="price">{{selectedArtist?.listeners}}</p>
-        <button class="button_order" type="button">Закаать</button>
+
+        <!-- Нижняя часть: имя и описание -->
+        <div class="bottom-section">
+            {{description}}
+            <!-- <p class="desc">{{selectedArtist?.description}}</p> -->
+        </div>
+       
     </div>
-    <div class="container_text">
-            {{selectedArtist?.playCount}}        
-    </div>
-</div>
-    
-    
 </div>

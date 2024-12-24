@@ -1,0 +1,17 @@
+<form  [formGroup]="form_registr" class="form_log" >
+    <h1 style="color:white;">Регистрация</h1>
+    <div class="form-group">
+        <label style="color:white;" for="email">Никнейм артиста</label>
+        <input formControlName="login" type="text" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label style="color:white;" for="password_1">Пароль</label>
+        <input formControlName="password" type="password"   required>
+    </div>
+    <div class="form-group">
+        <label style="color:white;" for="passw_reg">Подтвердите пароль</label>
+        <input formControlName="password_confirm" type="password_conf"  required>
+    </div>
+    <button class="btn"  type="submit">Зарегистрироваться</button>
+    <a (click)="redirect()">Вход</a>
+</form>

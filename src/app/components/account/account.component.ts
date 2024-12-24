@@ -2,28 +2,30 @@ import { Component } from '@angular/core';
 import { Users } from './Users';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { TracksComponent } from '../tracks/tracks.component';
 import { ArtistBioComponent } from '../../artist-bio/artist-bio.component';
 import { RegistrationService } from './RegistrationService';
-
+import { LoginComponent } from '../../login/login.component';
+import { RegistrationComponent } from '../../registration/registration.component';
+import { SwitchMenuComponent } from '../../switch-menu/switch-menu.component';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [FormsModule, TracksComponent, ArtistBioComponent],
+  imports: [FormsModule, TracksComponent, ArtistBioComponent,LoginComponent,RegistrationComponent,RouterModule,SwitchMenuComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent {
-  content: number = 0;
+  content: number = 1;
+  name:string='';
   isLogin: boolean = true;
-  us_log: string = '';
-  name: string = '';
   access: boolean = false;
-  us_password: string = '';
-  confirm_password: string = '';
   yt_result: string[] = [];
   users: Users[] = [];
-constructor(private registr:RegistrationService){
+  currentComponent:string='';
+constructor(private registr:RegistrationService,private router:Router){
 
 }
 async ngOnInit() {
@@ -37,44 +39,16 @@ async ngOnInit() {
   }
 }
 
-  async changeBlock(id: number) {
-    this.content = id;
-    console.log("переход");
+  async changeBlock(component: string) {
+    this.router.navigate([`/account/${component}`]);
+    console.log(`/account/${component}`)
   }
 
-  async Log() {
-const r=await this.registr.Login(this.us_log,this.us_password);
+ 
 
-    if(r.success){
-      this.access=true
-      
-        this.users.push({login:this.us_log,password:this.us_password})
-        this.name=this.us_log;
-        
-        console.log("добавил пользователя в список")
-      
-    }
-    else{
-      this.access=false;
-    }
-  }
-  Logout(){
-    
-  }
 
-  change() {
-    this.us_log = '';
-    this.us_password = '';
-    this.confirm_password = '';
-    this.isLogin = !this.isLogin;
-  }
-
-  async Registration() {
-   const data=await this.registr.Registration(this.us_log,this.us_password,this.confirm_password)
-    if(data){
-      alert("вы зарегистрировались");
-    }
-    
-    
+logout() {
+  this.access = false;
+  this.router.navigate(['/login']);
 }
 }
