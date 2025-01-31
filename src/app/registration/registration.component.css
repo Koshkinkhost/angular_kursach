@@ -1,6 +1,6 @@
 body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: #f3f6fa;
+  
     color: #163D60;
     
 }
@@ -8,8 +8,8 @@ body {
 .main {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -153,6 +153,9 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+}
+.form_log span{
+    color:red;
 }
 
 .form_log a {

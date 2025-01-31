@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { TracksComponent } from '../tracks/tracks.component';
 import { ArtistBioComponent } from '../../artist-bio/artist-bio.component';
-import { RegistrationService } from './RegistrationService';
 import { LoginComponent } from '../../login/login.component';
 import { RegistrationComponent } from '../../registration/registration.component';
 import { SwitchMenuComponent } from '../../switch-menu/switch-menu.component';
+import { RegistrationService } from '../../registration/RegistrationService';
+import { ProviderService } from './provider.service';
+
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -25,17 +27,21 @@ export class AccountComponent {
   yt_result: string[] = [];
   users: Users[] = [];
   currentComponent:string='';
-constructor(private registr:RegistrationService,private router:Router){
+constructor(public registr:RegistrationService,private router:Router,public provide:ProviderService){
 
 }
 async ngOnInit() {
+
   const isAuthenticated = await this.registr.CheckAuthentication();
-  if (isAuthenticated) {
-    this.access = true;
+  
+  if (this.registr.isAuth) {
+    this.access = this.registr.isAuth;
+    this.router.navigate(['/system'])
     // Вы можете также получить данные пользователя, например:
-    this.name = 'Имя пользователя'; // Подгрузите реальное имя с сервера, если требуется
+     // Подгрузите реальное имя с сервера, если требуется
   } else {
-    this.access = false;
+    this.router.navigate(['/login'])
+    this.access = this.registr.isAuth;
   }
 }
 
@@ -47,8 +53,12 @@ async ngOnInit() {
  
 
 
-logout() {
+async logout() {
   this.access = false;
-  this.router.navigate(['/login']);
+  this.registr.LogOut();
+  const isAuthenticated = await this.registr.CheckAuthentication();
+  this.provide.artist_name='';
+  this.router.navigate(['account/login']);
+
 }
 }

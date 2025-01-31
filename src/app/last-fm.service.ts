@@ -62,7 +62,7 @@ export class LastFmService {
   async TopChart(){
     const response=await fetch(`${this.baseUrl}?method=chart.gettoptracks&api_key=${this.lastfm_api}&format=json`)
     
-    return response.json()
+    return response.json();
   }
   async getPhoto(a:string){
     
@@ -77,4 +77,8 @@ export class LastFmService {
    
     return response.json()
    }
+   async Get_Similar_Artists(artist: string): Promise<any> {
+    const response = await fetch(`${this.baseUrl}?method=artist.getSimilar&artist=${artist}&api_key=${this.lastfm_api}&format=json`);
+    return response.json();
+  }
  }

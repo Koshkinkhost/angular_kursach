@@ -23,13 +23,7 @@ templateUrl: './services.component.html',
 export class ServicesComponent {
   isModalOpen = true;
 
-  openModal() {
-    this.isModalOpen = true;
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-  }
+  
   @Output() button_clicked=new EventEmitter<Artist>();
   
  artists:Artist[]=[];

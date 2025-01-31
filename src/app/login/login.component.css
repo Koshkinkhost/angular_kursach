@@ -8,10 +8,11 @@ body {
 .main {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content:center;
+    align-items: center;
     padding: 20px;
     box-sizing: border-box;
+   
 }
 
 .menu {
@@ -153,7 +154,19 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+   
 }
+.radio-group {
+    display: flex;
+    
+    gap: 20px; /* расстояние между радиокнопками */
+    align-items: center; /* выравнивание по вертикали */
+    padding:5px;
+  }
+  
+  input[type="radio"] {
+    margin-right: 5px; /* расстояние между кнопкой и меткой */
+  }
 
 .form_log a {
     text-decoration: underline;
@@ -173,7 +186,7 @@ body {
 
 .btn {
     border-radius: 8px;
-    width: 100%;
+    width: 90%;
     height: 40px;
     background-color: #163D60;
     color: white;

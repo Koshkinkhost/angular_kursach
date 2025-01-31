@@ -1,0 +1,73 @@
+.artist-similar {
+  padding: 40px 20px;
+  max-width: 100%; /* Делает блок по ширине экрана */
+  margin: 0 auto;
+  width: 60vw;
+  border-radius: 8px;
+  flex-shrink: 1;
+}
+
+.artist-similar h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #fdfbfb;
+}
+
+.artist-list {
+  display: flex;
+  flex-direction: column; /* Все элементы будут в колонку */
+  gap: 20px; /* Расстояние между элементами */
+}
+
+.artist-item {
+  background-color: #ffffff3f;
+  border-radius: 8px;
+  border:#ffffff solid 2px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.artist-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.artist-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f7f4f4;
+  margin-bottom: 10px;
+}
+
+.artist-match {
+  font-size: 16px;
+  color: #f7f0f0;
+  margin-bottom: 10px;
+}
+
+.artist-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 16px;
+  color: #ffffff;
+  background-color: #ff510000;
+  border-radius: 6px;
+  border: #f85a11 double 2px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.artist-link:hover {
+  background-color: #f85a11;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1024px) {
+  .artist-list {
+    gap: 15px; /* Немного уменьшаем расстояние на планшетах */
+  }
+}
+

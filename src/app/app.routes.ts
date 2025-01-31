@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { MainSectionComponent } from './components/main-section/main-section.component';
 import { ServicesComponent } from './components/services/services.component';
 import { HomeComponent } from './components/home/home.component';
-
 import { DescriptionComponent } from './components/description/description.component';
 import { FilialsComponent } from './components/filials/filials.component';
 import { AccountComponent } from './components/account/account.component';
@@ -11,25 +10,24 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ArtistBioComponent } from './artist-bio/artist-bio.component';
 import { TracksComponent } from './components/tracks/tracks.component';
+import {AnalyticsComponent} from './components/analytics/analytics.component'
+import { InSystemComponent } from './in-system/in-system.component';
+import { Component } from '@angular/core';
+import { SimilarArtistsComponent } from './similar-artists/similar-artists.component';
+import { SystemModule } from './system/system.module';
 export const routes: Routes = [
-  {path: '', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'filials', component: FilialsComponent },
   { path: 'desc/:id', component: DescriptionComponent },
   {
-    path:"account",
-    component:AccountComponent,
-    children:[
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegistrationComponent },
-      { path: 'artist-bio', component: ArtistBioComponent },
-      { path: 'tracks', component: TracksComponent },
-    ]
+    path: 'system',
+    loadChildren: () => import('./system/system.module').then(m => m.SystemModule),
   },
-  {
-    path:"news",component:NewsComponent
-  },
-
+  { path: 'account', component: AccountComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegistrationComponent },
+  { path: 'artist-bio', component: ArtistBioComponent },
+  { path: 'news', component: NewsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
-  // Для обработки неизвестных маршрутов
 ];

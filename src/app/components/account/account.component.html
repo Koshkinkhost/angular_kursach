@@ -1,32 +1,19 @@
 <div class="main">
-    <div class="menu">
-      <div class="profile">
-        <img src="consult.png">
-        <span>{{ name }}</span>
+   
+     
+    <!-- @if(this.registr.isAuth){
+      <div (click)="logout()" id="5" class="part">
+        <a>Выход</a>
       </div>
-      @if(!access) {
-        <div (click)="changeBlock('login')" id="1" class="part">
-          <a>Войти</a>
-        </div>
-      }
-      @if(access) {
-      <div (click)="changeBlock('tracks')" id="2" class="part">
-        <a>Треки</a>
-      </div>
-      <div (click)="changeBlock('tracks')"  id="3" class="part">
-        <a>Аналитика</a>
-      </div>
-      <div  (click)="changeBlock('promocodes')" id="4" class="part">
-        <a>Промокоды</a>
-      </div>
-    
-        <div (click)="logout()" id="5" class="part">
-          <a>Выход</a>
-        </div>
-      }
-    </div>
+    }
+        -->
+      
+  
     <div class="info">
-       <app-switch-menu [currentComponent]="currentComponent"></app-switch-menu>
+       
+            <app-switch-menu [currentComponent]="currentComponent"></app-switch-menu>
+
+        
      
     </div>
   </div>

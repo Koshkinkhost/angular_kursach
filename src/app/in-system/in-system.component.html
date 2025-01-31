@@ -1,0 +1,17 @@
+<div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">{{this.name}}</h1>
+      <button (click)="logout()" class="exit">Выход</button>
+    </header>
+  
+    <nav class="dashboard-menu">
+      <a routerLink="/system/tracks" routerLinkActive="active" class="menu-link">Треки</a>
+      <a routerLink="/system/analytics" routerLinkActive="active" class="menu-link">Аналитика</a>
+      <a routerLink="/system/similar" routerLinkActive="active" class="menu-link">Похожие</a>
+    </nav>
+  
+    <main class="dashboard-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+  

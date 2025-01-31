@@ -1,13 +1,26 @@
-<form [formGroup]="form_login" class="form_log" >
-    <h1 style="color:white;">Вход</h1>
-    <div class="form-group">
+<div class="main">
+    <form [formGroup]="form_login" (ngSubmit)="Loginn()" class="form_log">
+      <h1 style="color:white;">Вход</h1>
+      <div class="form-group">
         <label style="color:white;" for="email">Никнейм артиста</label>
-        <input formControlName="login"  type="text" id="email" name="email" required>
-    </div>
-    <div class="form-group">
+        <input formControlName="login" type="text" id="email" name="email" required>
+      </div>
+      <div class="form-group">
         <label style="color:white;" for="passw">Пароль</label>
-        <input formControlName="password"  type="password" id="passw" name="pass" required>
-    </div>
-    <button class="btn" type="submit">Войти</button>
-    <a (click)="redirect()"  >Зарегистрироваться</a>
-</form>
+        <input formControlName="password" type="password" id="passw" name="pass" required>
+        <span style="color:red">
+          @for(error of errors; track $index){
+            {{error}}<br>
+          }
+        </span>
+      </div>
+      <div class="radio-group">
+        <input name="role" formControlName="role" value="user" type="radio"> <label for="user" style="color:white;">Пользователь</label>
+        <input name="role" formControlName="role" value="admin" type="radio"> <label for="admin" style="color:white;">Админ</label>
+      </div>
+      <button class="btn" >Войти</button>
+      <a (click)="redirect()">Зарегистрироваться</a>
+    </form>
+  </div>
+  
+  

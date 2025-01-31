@@ -1,0 +1,15 @@
+<div class="artist-similar">
+  <h2 class="header">Похожие исполнители</h2>
+  
+  <div class="artist-list">
+    @for (artist of similar_artists; track $index) {
+      <div class="artist-item">
+        <div class="artist-info">
+          <p class="artist-name">{{ artist.name }}</p>
+          <p class="artist-match">Схожесть: {{ artist.match }}</p>
+          <a [href]="artist.url" target="_blank" class="artist-link">Подробнее</a>
+        </div>
+      </div>
+    }
+  </div>
+</div>
