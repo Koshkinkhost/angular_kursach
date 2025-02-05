@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistrationService } from '../registration/RegistrationService';
@@ -25,6 +25,20 @@ redirect(){
   console.log(form_value.role,form_value.password,form_value.role);
   this.router.navigate(["/register"])
 }
+
+ngOnInit(){
+  switch (this.login.GetCurrentRole()) {
+    case 'user':
+      this.router.navigate(["/system"])
+      break;
+      case 'admin':
+        this.router.navigate(["/adminka"])
+        break;
+  
+    default:
+      break;
+  }
+}
 async Loginn(){
   this.errors=[];
  
@@ -38,7 +52,7 @@ localStorage.setItem('username',form_value.login);
 
 
 console.log(data);
-if(data.success){
+if(data.success && form_value.role=="user"){
   this.login.isAuth=true;
   this.login.SetRole(form_value.role);
   this.router.navigate(["/system"])
@@ -47,5 +61,10 @@ this.provide.artist_name=form_value.login;
 }
 const rights=await this.login.check_Rights(form_value.login)
 console.log(rights);
+if(data.success && form_value.role=="admin"){
+  this.router.navigate(["/adminka"]);
+  this.login.SetRole(form_value.role);
 }
+}
+
 }

@@ -1,3 +1,31 @@
+@if(this.registr.user_role=="admin"){
+
+
+    <div >
+        <h2>Добавить студию</h2>
+        <!-- Форма для добавления студии -->
+        <form>
+          <!-- Поля для добавления студии -->
+          <label for="title">Название студии:</label>
+          <input type="text" id="title" name="title" required>
+      
+          <label for="phone_num">Телефон:</label>
+          <input type="text" id="phone_num" name="phone_num" required>
+      
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+      
+          <label for="street">Улица:</label>
+          <input type="text" id="street" name="street" required>
+      
+          <label for="build">Дом:</label>
+          <input type="text" id="build" name="build" required>
+      
+          <button type="submit">Добавить студию</button>
+        </form>
+      </div>
+    }
+
 <app-filial [lat]=55.745107 [long]=37.603437 [title]="'Micro'" [phone_num]="'+79456745533'" [email]="'micro@mail.com'" [street]="'Арбат'" [build]="'13'"></app-filial>
 <app-filial [lat]=55.755926 [long]=37.617838 [title]="'Gringo'" [phone_num]="'+79763452314'" [email]="'gringo_studio@mail.com'" [street]="'Ленина'" [build]="'123'"></app-filial>
 <app-filial [lat]=55.791252 [long]=37.616081 [title]="'SoundWave'" [phone_num]="'+79123456789'" [email]="'soundwave@mail.com'" [street]="'Проспект Мира'" [build]="'45'"></app-filial>

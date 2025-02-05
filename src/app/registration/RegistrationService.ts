@@ -11,6 +11,7 @@ export class RegistrationService {
   url_check_role: string = "http://localhost:8080/api/v2/Account/GetUserRole";
   url_news: string = "http://localhost:8080/api/v2/News/GetNews";
   artist_name:string='';
+  user_role:string='';
   private userRoleSubject=new BehaviorSubject<string>('');
   public userRole$=this.userRoleSubject.asObservable();
   public isAuth=false;
@@ -83,7 +84,7 @@ const data={
 }
 
 async CheckAuthentication() {
-  try {
+
     const request = await fetch('http://localhost:8080/api/v2/Account/CheckAuth', {
       method: 'GET',
       credentials: 'include' // Указываем, что нужно отправлять cookie
@@ -92,11 +93,11 @@ async CheckAuthentication() {
     if (request.ok) {
       const result = await request.json();
       this.isAuth= result.isAuthenticated
+      return this.isAuth;
       
     }
-  } catch (error) {
-    console.error('Ошибка проверки аутентификации:', error);
-  }
+    return null;
+  
 
 }
 async LogOut(){

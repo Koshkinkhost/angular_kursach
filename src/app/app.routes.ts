@@ -13,8 +13,10 @@ import { TracksComponent } from './components/tracks/tracks.component';
 import {AnalyticsComponent} from './components/analytics/analytics.component'
 import { InSystemComponent } from './in-system/in-system.component';
 import { Component } from '@angular/core';
+import { authGuard } from './auth.guard'; 
 import { SimilarArtistsComponent } from './similar-artists/similar-artists.component';
 import { SystemModule } from './system/system.module';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -22,12 +24,13 @@ export const routes: Routes = [
   { path: 'desc/:id', component: DescriptionComponent },
   {
     path: 'system',
-    loadChildren: () => import('./system/system.module').then(m => m.SystemModule),
+    loadChildren: () => import('./system/system.module').then(m => m.SystemModule)
   },
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
+  {path:'adminka',component:AdminPanelComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

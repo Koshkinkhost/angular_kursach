@@ -31,17 +31,20 @@ constructor(public registr:RegistrationService,private router:Router,public prov
 
 }
 async ngOnInit() {
-
-  const isAuthenticated = await this.registr.CheckAuthentication();
-  
-  if (this.registr.isAuth) {
-    this.access = this.registr.isAuth;
-    this.router.navigate(['/system'])
-    // Вы можете также получить данные пользователя, например:
-     // Подгрузите реальное имя с сервера, если требуется
-  } else {
-    this.router.navigate(['/login'])
-    this.access = this.registr.isAuth;
+  this.checkAuthenticationAndRedirect();
+}
+private async checkAuthenticationAndRedirect() {
+  try {
+    const isAuthenticated = await this.registr.CheckAuthentication();
+    if (this.registr.isAuth && this.registr.GetCurrentRole() === 'user') {
+      this.router.navigate(['/system']);
+    } else if (this.registr.isAuth && this.registr.GetCurrentRole() === 'admin') {
+      this.router.navigate(['/adminka']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  } catch (error) {
+    console.error('Ошибка при проверке аутентификации:', error);
   }
 }
 

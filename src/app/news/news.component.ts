@@ -27,7 +27,7 @@ async ngOnInit(){
     
   const storedRole = localStorage.getItem('userRole');
   if (storedRole !== null) {
-    this.role = storedRole;
+    this.registr.user_role = storedRole;
   } 
 
     const news=await this.registr.GetNews();

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RegistrationService } from '../../registration/RegistrationService';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [RouterLink, RouterLinkActive]
 })
 export class HeaderComponent {
+  constructor(public registr:RegistrationService){
+    
+  }
   public visible:boolean=false;
   change(){
     this.visible=!this.visible

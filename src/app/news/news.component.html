@@ -1,32 +1,29 @@
 <div class="news-wrapper">
   <div class="news-header">
     <h2 class="news-section-title">Последние новости</h2>
-    @if (this.role == "admin") {
+    @if (this.registr.user_role == "admin") {
       <p>{{this.registr.GetCurrentRole()}}</p>
-      <form  class="news-form">
+      <form class="news-form">
         <p>Добавить новость</p>
-        <label>Заголовок:</label>
-        <input type="text" required>
-  
-        <label>Описание:</label>
-        <textarea  required></textarea>
-  
-        <label>Ссылка на изображение:</label>
-        <input type="text"  required>
-  
-        <label>Ссылка на новость:</label>
-        <input type="text"  required>
-  
-        <label>Дата:</label>
-        <input type="date"  required>
-  
+        <label for="news-title">Заголовок:</label>
+        <input id="news-title" type="text" placeholder="Введите заголовок" required>
+
+        <label for="news-description">Описание:</label>
+        <textarea id="news-description" placeholder="Введите описание" required></textarea>
+
+        <label for="image-url">Ссылка на изображение:</label>
+        <input id="image-url" type="text" placeholder="Введите ссылку на изображение" required>
+
+        <label for="news-link">Ссылка на новость:</label>
+        <input id="news-link" type="text" placeholder="Введите ссылку на новость" required>
+
+        <label for="news-date">Дата:</label>
+        <input id="news-date" type="date" required>
+
         <button type="submit">Добавить</button>
       </form>
     }
   </div>
-
-  <!-- Форма добавления новости (доступна только админу) -->
- 
 
   <div class="news-items">
     @for (newsItem of newsList; track $index) {
