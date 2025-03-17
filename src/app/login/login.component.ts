@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { RegistrationService } from '../registration/RegistrationService';
 import { ProviderService } from '../components/account/provider.service';
+import { LastFmService } from '../last-fm.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -11,7 +12,7 @@ templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router:Router,private login:RegistrationService,private provide:ProviderService){}
+  constructor(private router:Router,private login:RegistrationService,private provide:ProviderService,private lastfm:LastFmService){}
 errors:string[]=[];
 form_login:FormGroup=new FormGroup(
   {
@@ -34,8 +35,11 @@ ngOnInit(){
       case 'admin':
         this.router.navigate(["/adminka"])
         break;
-  
+      case 'None':
+        console.log("NONE");
+        break;
     default:
+      
       break;
   }
 }
@@ -49,22 +53,22 @@ const data=await result.json();
 this.errors.push(data.messages.Errors);
 
 localStorage.setItem('username',form_value.login);
-
+this.lastfm.changeUserName(form_value.login);
+this.login.user_role=form_value.role;
 
 console.log(data);
-if(data.success && form_value.role=="user"){
-  this.login.isAuth=true;
-  this.login.SetRole(form_value.role);
-  this.router.navigate(["/system"])
-this.provide.artist_name=form_value.login;
-  console.log(form_value.login);
+if (data.success) {
+  if (form_value.role === 'user') {
+    this.login.SetAuthState(true);
+    this.login.SetRole(form_value.role);
+    this.router.navigate(['/system']);
+    this.provide.artist_name = form_value.login;
+  } else if (form_value.role === 'admin') {
+    this.router.navigate(['/adminka']);
+    this.login.SetRole(form_value.role);
+  }
 }
-const rights=await this.login.check_Rights(form_value.login)
-console.log(rights);
-if(data.success && form_value.role=="admin"){
-  this.router.navigate(["/adminka"]);
-  this.login.SetRole(form_value.role);
-}
+
 }
 
 }

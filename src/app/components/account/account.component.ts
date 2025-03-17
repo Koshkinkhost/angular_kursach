@@ -31,14 +31,15 @@ constructor(public registr:RegistrationService,private router:Router,public prov
 
 }
 async ngOnInit() {
+  console.log("в аккаунте");
   this.checkAuthenticationAndRedirect();
 }
 private async checkAuthenticationAndRedirect() {
   try {
-    const isAuthenticated = await this.registr.CheckAuthentication();
-    if (this.registr.isAuth && this.registr.GetCurrentRole() === 'user') {
+    const isAuthenticated =  this.registr.GetAuthState();
+    if (isAuthenticated && this.registr.GetCurrentRole() === 'user') {
       this.router.navigate(['/system']);
-    } else if (this.registr.isAuth && this.registr.GetCurrentRole() === 'admin') {
+    } else if (isAuthenticated && this.registr.GetCurrentRole() === 'admin') {
       this.router.navigate(['/adminka']);
     } else {
       this.router.navigate(['/login']);
@@ -49,19 +50,12 @@ private async checkAuthenticationAndRedirect() {
 }
 
   async changeBlock(component: string) {
-    this.router.navigate([`/account/${component}`]);
-    console.log(`/account/${component}`)
+    this.router.navigate([`/${component}`]);
+    console.log(`/${component}`)
   }
 
  
 
 
-async logout() {
-  this.access = false;
-  this.registr.LogOut();
-  const isAuthenticated = await this.registr.CheckAuthentication();
-  this.provide.artist_name='';
-  this.router.navigate(['account/login']);
 
-}
 }

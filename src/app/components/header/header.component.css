@@ -1,7 +1,6 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-}
+/* * {
+    border: white 2px solid;
+} */
 
 .main {
     box-sizing: border-box;
@@ -10,7 +9,7 @@
     height: 100px;
     
     overflow: hidden;
-    background-color: aquamarine;
+  
     display: flex;
     justify-content: space-between;
 box-shadow: 0px 10px 20px 3px #ece0e02c;
@@ -54,6 +53,7 @@ a:hover {
 .burger-menu {
     width: 200px;
     height: 100%;
+   margin-top: 1%;
     display: flex;
     justify-content: flex-end;
 }
@@ -74,7 +74,7 @@ a:hover {
     width: 230px;
     height: auto;
     margin-left: -110px;
-    background-color: rgba(22, 61, 96, 0.9);
+    background-color: rgba(160, 186, 209, 0.9);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -88,6 +88,59 @@ a:hover {
     margin-top: 10px;
     text-shadow: none;
 }
+
+.my_burger{
+    width:80px;
+    padding: 4px;
+    height: 80px;
+    display: flex;
+    margin-left: -1%;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+.my_burger-open{
+    width:80px;
+    padding: 4px;
+    height: 80px;
+   
+    display: flex;
+    margin-left: -5px;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+.my_burger span{
+    width: 100%;
+    height: 6%;
+    background-color: #ffffff;
+    border-radius: 20%;
+    transition: all 0.3s ease-in-out;
+
+}
+.my_burger-open span{
+    width: 100%;
+    height: 6%;
+    border-radius: 20%;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.my_burger-open .s1{
+    
+    transform: translate(5px,40px) rotate(45deg);
+}
+.my_burger-open .s2{
+    
+    opacity: 0%;
+}
+
+.my_burger-open .s3{
+    
+    transform: translate(5px,-35px) rotate(-45deg);
+}
+
+
 
 .contact {
     align-items: center;
@@ -141,9 +194,11 @@ a:hover {
 }
 
 @media (max-width: 1114px) {
-    
+    .containerr{
+        width:85%;
+    }
     .burger {
-        display: block;
+        display: none;
     }
     .contact{
         display: none;
@@ -151,6 +206,9 @@ a:hover {
     
 }
 @media (max-width: 880px) {
+    .containerr{
+        width:20%;
+    }
     .title {
         display: none;
     }

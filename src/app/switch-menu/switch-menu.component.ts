@@ -14,9 +14,9 @@ export class SwitchMenuComponent {
   constructor(private router:Router,private registr:RegistrationService){}
 @Input() currentComponent:string='';
 async ngOnChanges(changes:SimpleChanges){
-  const isAuthenticated = await this.registr.CheckAuthentication();
+  const isAuthenticated =  this.registr.GetAuthState();
   console.log(isAuthenticated+" аутентификация");
-  if (this.registr.isAuth) {
+  if (isAuthenticated) {
     if(changes['currentComponent']){
       this.navigateTo(this.currentComponent)
 

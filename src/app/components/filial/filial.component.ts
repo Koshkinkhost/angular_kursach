@@ -20,8 +20,9 @@ export class FilialComponent {
   @Input() email!: string;
   @Input() street!: string;
   @Input() build!: string;
-  @Input() lat!:number;
-  @Input() long!:number;
+  @Input() lat!:string;
+  @Input() long!:string;
+  @Input() city!:string;
 
   public visible: boolean = false;
   public info: string = 'На карте';

@@ -19,12 +19,12 @@ export class TracksComponent {
   constructor(private last:LastFmService,private provide:ProviderService,private registr:RegistrationService,private router:Router){}
 async ngOnInit(){
  
-  const isAuthenticated = await this.registr.CheckAuthentication();
+  const isAuthenticated =  this.registr.GetAuthState();
   // const role_check=await this.registr.Check_Roles();
   // console.log(role_check);//проверка РОЛИ
 
   const storage_name=localStorage.getItem('username');
-  if (this.registr.isAuth && storage_name) {
+  if (isAuthenticated && storage_name) {
    
     const data=await this.last.TopTracks(storage_name);
   console.log(data);

@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Artist } from './components/Artist';
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LastFmService {
+  private userNameSubject=new BehaviorSubject<string>('');
+  userName$=this.userNameSubject.asObservable();
+
    baseUrl:string = 'http://ws.audioscrobbler.com/2.0/';
    ident_catalog:string='aje77vap5p80l9dh3saf';
    private key: string = 'AQVNxz_VkuUAqlsR8U95eGIq_TcIpcWYn0oAS6zv'; // Замените на ваш API-ключ
    private lastfm_api:string='49b7daeef42c58b20fdcc06b0cfacc86';
     google_api:string="AIzaSyCaEPuB0AaQXHcNhZizQ_f13EFsZWZHj90"
  search_id:string="555f0391cc25c4c3b"
-   artists:Artist[]=[{
+   artists:Artist[]=[
+    {
     id: "1",
     name: "Radiohead",
     listeners: "12345678",
@@ -51,6 +57,12 @@ export class LastFmService {
     registr_date: "2020-07-12"
 }]
   constructor() { }
+  changeUserName(newUserName:string){
+    this.userNameSubject.next(newUserName);
+  }
+  GetUserName(){
+    return this.userNameSubject.getValue();
+  }
   async find_artist(name:string){
     const response=await fetch(`${this.baseUrl}?method=artist.getinfo&artist=${name}&api_key=${this.lastfm_api}&format=json`)
    return response.json()
@@ -79,6 +91,9 @@ export class LastFmService {
    }
    async Get_Similar_Artists(artist: string): Promise<any> {
     const response = await fetch(`${this.baseUrl}?method=artist.getSimilar&artist=${artist}&api_key=${this.lastfm_api}&format=json`);
-    return response.json();
+    console.log("подобные артисты ");
+    const data=await response.json()
+    
+    return data;
   }
  }

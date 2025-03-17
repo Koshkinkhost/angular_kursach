@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import { Router } from '@angular/router';
+import { API_URLS } from '../../../constants';
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationService {
-  url: string = "http://localhost:8080/api/v2/Account/Registration";
-  url_log: string = "http://localhost:8080/api/v2/Account/Login";
-  url_logOut: string = "http://localhost:8080/api/v2/Account/LogOut";
-  url_check_admin: string = "http://localhost:8080/api/v2/Account/CheckRights";
-  url_check_role: string = "http://localhost:8080/api/v2/Account/GetUserRole";
-  url_news: string = "http://localhost:8080/api/v2/News/GetNews";
+  constructor(private router:Router){
+
+  }
+  url: string = `${API_URLS.BASE_URL}${API_URLS.REGISTRATION}`;
+  url_log: string = `${API_URLS.BASE_URL}${API_URLS.LOGIN}`;
+  url_logOut: string = `${API_URLS.BASE_URL}${API_URLS.LOGOUT}`;
+  url_check_admin: string = `${API_URLS.BASE_URL}${API_URLS.CHECK_ADMIN}`;
+  url_check_role: string = `${API_URLS.BASE_URL}${API_URLS.CHECK_ROLE}`;
+  url_news: string = API_URLS.NEWS; // У News уже полный URL
   artist_name:string='';
   user_role:string='';
+  private isAuthSubject = new BehaviorSubject<boolean>(false);
+  public isAuth$ = this.isAuthSubject.asObservable();
+
   private userRoleSubject=new BehaviorSubject<string>('');
   public userRole$=this.userRoleSubject.asObservable();
-  public isAuth=false;
+  
   private tokenKey = "authToken";
   async GetNews(){
     const request = await fetch(this.url_news, {
@@ -28,6 +36,15 @@ export class RegistrationService {
   }
   GetCurrentRole(){
     return this.userRoleSubject.getValue();
+  }
+
+  SetAuthState(isAuthenticated: boolean):void{
+    this.isAuthSubject.next(isAuthenticated);
+
+  }
+
+  GetAuthState():boolean{
+    return this.isAuthSubject.getValue();
   }
 async Login(login:string,password:string,role:string):Promise<any>{
   const headers = new Headers({
@@ -46,7 +63,11 @@ async Login(login:string,password:string,role:string):Promise<any>{
      credentials:'include',
     body: JSON.stringify(data)
   });
-  
+
+  if(request.ok){
+    this.isAuthSubject.next(true);
+    
+  }
  return request;
 }
 
@@ -92,8 +113,11 @@ async CheckAuthentication() {
 
     if (request.ok) {
       const result = await request.json();
-      this.isAuth= result.isAuthenticated
-      return this.isAuth;
+      this.SetAuthState(result.isAuthenticated);
+      
+      const state=this.GetAuthState();
+      console.log("CheckAuth "+state);
+      return state;
       
     }
     return null;
@@ -116,6 +140,19 @@ async LogOut(){
      credentials:'include',
     body: JSON.stringify(data)
   });
+  if (request.ok) {
+    
+      this.SetAuthState(false);
+    console.log("состяние аунтфикации "+this.GetAuthState())
+    localStorage.removeItem('username'); // Убираем данные пользователя
+    this.router.navigate(["/"]);
+    this.SetRole('None');
+    console.log("РОЛЬ В СЕРВИСЕ ",this.GetCurrentRole())
+    console.log("User logged out.");
+
+} else {
+    console.error("Logout failed.");
+}
 }
   
   async check_Rights(login:string){
@@ -134,6 +171,7 @@ async LogOut(){
        credentials:'include',
       body: JSON.stringify(data)
     });
+    
     
    return request;
   }

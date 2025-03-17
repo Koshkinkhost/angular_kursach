@@ -10,8 +10,13 @@ import { RegistrationService } from '../registration/RegistrationService';
 })
 export class AdminPanelComponent {
   constructor(private registr:RegistrationService){}
-  logout(){
-    this.registr.LogOut();
+  async logout(){
+    console.log("нажал админ")
+    
+    await this.registr.LogOut();
+   
+    
   }
+  
 
 }

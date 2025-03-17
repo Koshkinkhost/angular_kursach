@@ -11,8 +11,8 @@ import { LastFmService } from '../../last-fm.service';
 export class AnalyticsComponent {
     constructor(private registr:RegistrationService,private router:Router,private lastFm:LastFmService){}
     async ngOnInit(){
-        const isAuthenticated = await this.registr.CheckAuthentication();
-        if (this.registr.isAuth) {
+        const isAuthenticated =  this.registr.GetAuthState();
+        if (isAuthenticated) {
       console.log("в системе")
       this.TopFans();
         }

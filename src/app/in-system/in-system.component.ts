@@ -14,27 +14,28 @@ export class InSystemComponent {
 constructor(public provide:ProviderService,private registr:RegistrationService,private router:Router){}
 async ngOnInit(){
  
-  this.checkauth()
+ 
 }
- async logout(){
-  console.log("нажал")
+async logout() {
+  console.log("нажал");
+  localStorage.removeItem('username');
+  this.registr.SetAuthState(false);
   await this.registr.LogOut();
-  this.checkauth();
-}
-async checkauth(){
-  const isAuthenticated = await this.registr.CheckAuthentication();
-  if (this.registr.isAuth) {
-    
-   const storage_name=localStorage.getItem('username');
-   if(storage_name){
-    this.name=storage_name;
-    this.registr.artist_name=this.name;
-   }
-    // Вы можете также получить данные пользователя, например:
-     // Подгрузите реальное имя с сервера, если требуется
+ 
+  this.registr.SetRole('');
+ 
+  const result =   this.registr.GetAuthState();
+  console.log("Результат CheckAuthentication: ", result);
+
+  if (!result) {
+    console.log("Выход выполнен");
+    this.router.navigate(['/login']);
+
   } else {
-    this.router.navigate(['/login'])
-    
+    console.log("Не удалось выйти, остаёмся в системе");
   }
 }
+
+
+
 }

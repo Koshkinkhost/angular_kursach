@@ -13,8 +13,8 @@ export class SimilarArtistsComponent {
   similar_artists: { name: string; match: string; url: string }[] = [];
   constructor(private lastfm:LastFmService,private registr:RegistrationService,private router:Router){}
   async ngOnInit(){
-    const isAuthenticated = await this.registr.CheckAuthentication();
-    if (this.registr.isAuth) {
+    const isAuthenticated =  this.registr.GetAuthState();
+    if (isAuthenticated) {
   console.log("в системе")
   const data=await this.Similar();
   console.log(data)
@@ -31,8 +31,12 @@ export class SimilarArtistsComponent {
 }
 // Логика компонента
 async Similar(){
-const result=await this.lastfm.Get_Similar_Artists(this.registr.artist_name);
+ const artist_name=this.lastfm.GetUserName();
+ if(artist_name){
+  const result=await this.lastfm.Get_Similar_Artists(artist_name);
+  return result;
+ }
 
-return result;
+
 }
 }

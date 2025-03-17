@@ -1,34 +1,40 @@
-@if(this.registr.user_role=="admin"){
+@if(this.registr.GetCurrentRole()=="admin"){
 
 
     <div >
         <h2>Добавить студию</h2>
         <!-- Форма для добавления студии -->
-        <form>
+        <form [formGroup]="form_studio" (submit)="Add_Studio()">
           <!-- Поля для добавления студии -->
           <label for="title">Название студии:</label>
-          <input type="text" id="title" name="title" required>
+          <input type="text" formControlName="name" required>
       
           <label for="phone_num">Телефон:</label>
-          <input type="text" id="phone_num" name="phone_num" required>
+          <input type="text" formControlName="phone_num" required>
       
           <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" formControlName="email" required>
+
+          <label for="long">Долгота:</label>
+          <input type="text"  formControlName="long" required>
+
+          <label for="long">Широта:</label>
+          <input type="text"  formControlName="lat" required>
       
           <label for="street">Улица:</label>
-          <input type="text" id="street" name="street" required>
+          <input type="text" formControlName="street" required>
       
           <label for="build">Дом:</label>
-          <input type="text" id="build" name="build" required>
+          <input type="text" formControlName="build" required>
+
+          <label for="build">Город:</label>
+          <input type="text" formControlName="city" required>
       
-          <button type="submit">Добавить студию</button>
+          <button >Добавить студию</button>
         </form>
       </div>
     }
+@for(studio of st;track $index){
+  <app-filial [lat]=studio.latitude [long]=studio.longitude [title]=studio.name [phone_num]=studio.phone_num [city]=studio.city [email]=studio.email [street]=studio.street [build]=studio.build></app-filial>
 
-<app-filial [lat]=55.745107 [long]=37.603437 [title]="'Micro'" [phone_num]="'+79456745533'" [email]="'micro@mail.com'" [street]="'Арбат'" [build]="'13'"></app-filial>
-<app-filial [lat]=55.755926 [long]=37.617838 [title]="'Gringo'" [phone_num]="'+79763452314'" [email]="'gringo_studio@mail.com'" [street]="'Ленина'" [build]="'123'"></app-filial>
-<app-filial [lat]=55.791252 [long]=37.616081 [title]="'SoundWave'" [phone_num]="'+79123456789'" [email]="'soundwave@mail.com'" [street]="'Проспект Мира'" [build]="'45'"></app-filial>
-<app-filial [lat]=55.782101 [long]=37.598152 [title]="'BeatMakers'" [phone_num]="'+79876543210'" [email]="'beatmakers@mail.com'" [street]="'Новослободская'" [build]="'78'"></app-filial>
-<app-filial [lat]=55.770892 [long]=37.596139 [title]="'MelodyHub'" [phone_num]="'+79234567890'" [email]="'melodyhub@mail.com'" [street]="'Тверская'" [build]="'29'"></app-filial>
-<app-filial [lat]=55.749809 [long]=37.537109 [title]="'RhythmZone'" [phone_num]="'+79345678901'" [email]="'rhythmzone@mail.com'" [street]="'Пресненская набережная'" [build]="'10'"></app-filial>
+}
