@@ -29,7 +29,7 @@ redirect(){
 
 ngOnInit(){
   switch (this.login.GetCurrentRole()) {
-    case 'user':
+    case 'Artist':
       this.router.navigate(["/system"])
       break;
       case 'admin':
@@ -58,7 +58,7 @@ this.login.user_role=form_value.role;
 
 console.log(data);
 if (data.success) {
-  if (form_value.role === 'user') {
+  if (form_value.role === 'Artist') {
     this.login.SetAuthState(true);
     this.login.SetRole(form_value.role);
     this.router.navigate(['/system']);
