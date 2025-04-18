@@ -18,7 +18,7 @@ const routes = [
 @NgModule({
   
   imports: [
-  CommonModule,SimilarArtistsComponent, TracksComponent, RouterModule,    RouterModule.forChild(routes),  // Используем forChild для вложенных маршрутов
+  CommonModule,SimilarArtistsComponent, RouterModule,    RouterModule.forChild(routes),  // Используем forChild для вложенных маршрутов
 
   ]
 })

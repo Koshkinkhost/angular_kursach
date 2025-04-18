@@ -1,7 +1,6 @@
-export type Track= {
-    artistName: string; // Имя артиста
-    trackName: string; // Название трека
-    playcount: number; // Количество прослушиваний
-    listeners: number; // Количество слушателей
-  }
-  
+export type Track = {
+  title: string;           // Название трека
+  trackArtist: string;     // Имя артиста
+  genreTrack: string;      // Жанр
+  listenersCount: number;  // Кол-во слушателей
+}

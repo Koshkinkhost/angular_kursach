@@ -41,6 +41,7 @@ export class StudiosService {
   
       })
       const data=await result.json();
+      await this.Get_Studios();
     
       return data;
     }

@@ -1,15 +1,16 @@
 <div class="top-tracks">
     <h2>🔥 Топ треки недели 🔥</h2>
     <ul class="track-list">
-@for( item of tracks; track $index){
+@for( item of trackList; track $index){
 
 
       
           
           <div class="track-item">
-            <h3 class="title">Трек: {{item.trackName }}</h3>
-            <p class="artist"> Артист: {{item.artistName}} </p>
-            <p class="duration">Слушателей: {{item.listeners}} </p>
+            <h3 class="title">Трек: {{item.title }}</h3>
+            <p class="artist"> Артист: {{item.trackArtist}} </p>
+            <p class="duration">Прослушиваний: {{item.listenersCount}} </p>
+            <p class="duration">Жанр: {{item.genreTrack}} </p>
           </div>
         
     }

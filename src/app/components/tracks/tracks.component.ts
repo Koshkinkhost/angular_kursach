@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-tracks',
   standalone: true,
   imports: [],
+providers:[LastFmService],
   templateUrl: './tracks.component.html',
   styleUrl: './tracks.component.css'
 })
@@ -16,7 +17,7 @@ export class TracksComponent {
   
   yt_results:string[]=[];
   tracks:Track[]=[];
-  constructor(private last:LastFmService,private provide:ProviderService,private registr:RegistrationService,private router:Router){}
+  constructor(private last:LastFmService,private registr:RegistrationService,private router:Router){}
 async ngOnInit(){
  
   const isAuthenticated =  this.registr.GetAuthState();

@@ -15,7 +15,7 @@ import { ProviderService } from './provider.service';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [FormsModule, TracksComponent, ArtistBioComponent,LoginComponent,RegistrationComponent,RouterModule,SwitchMenuComponent],
+  imports: [FormsModule, TracksComponent,RegistrationComponent,RouterModule,SwitchMenuComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })

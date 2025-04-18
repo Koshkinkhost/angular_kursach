@@ -12,7 +12,7 @@ templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router:Router,private login:RegistrationService,private provide:ProviderService,private lastfm:LastFmService){}
+  constructor(private router:Router,private login:RegistrationService,private lastfm:LastFmService){}
 errors:string[]=[];
 form_login:FormGroup=new FormGroup(
   {
@@ -35,11 +35,9 @@ ngOnInit(){
       case 'admin':
         this.router.navigate(["/adminka"])
         break;
-      case 'None':
-        console.log("NONE");
-        break;
-    default:
       
+    default:
+      console.log("NONE");
       break;
   }
 }
@@ -62,10 +60,11 @@ if (data.success) {
     this.login.SetAuthState(true);
     this.login.SetRole(form_value.role);
     this.router.navigate(['/system']);
-    this.provide.artist_name = form_value.login;
+    
   } else if (form_value.role === 'admin') {
     this.router.navigate(['/adminka']);
     this.login.SetRole(form_value.role);
+    console.log("РОЛЬ ПОЛЬЗОВАТЕЛЯ "+form_value.role);
   }
 }
 

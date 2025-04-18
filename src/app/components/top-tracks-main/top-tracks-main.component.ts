@@ -1,6 +1,7 @@
-import { Component,OnInit } from '@angular/core';
-import { LastFmService } from '../../last-fm.service';
+import { Component, OnInit } from '@angular/core';
 import { Track } from './TopTrack';
+import { TracksService } from './tracks.service';
+
 @Component({
   selector: 'app-top-tracks-main',
   standalone: true,
@@ -8,23 +9,27 @@ import { Track } from './TopTrack';
   templateUrl: './top-tracks-main.component.html',
   styleUrl: './top-tracks-main.component.css'
 })
-export class TopTracksMainComponent {
-constructor(private lastFm:LastFmService){}
-tracks:Track[]=[]
-mapToTrack(data:any):Track | any{
-  return {
-    artistName:data.artist.name,
-    trackName:data.name,
-    playcount:Number(data.playCount),
-    listeners:Number(data.listeners)
+export class TopTracksMainComponent implements OnInit {
+  trackList: Track[] = [];
+
+  constructor(private tracksService: TracksService) {}
+
+  mapToTrack(data: any): Track {
+    return {
+      title: data.title,
+      trackArtist: data.track_Artist,
+      genreTrack: data.genre_track,
+      listenersCount: Number(data.listeners_count)
+    };
   }
 
-}
-async ngOnInit(){
-  const data=await this.lastFm.TopChart()
-  
- this.tracks=data.tracks.track.map((trackdata:any)=>this.mapToTrack(trackdata));
- console.log(this.tracks)
-}
-
+  async ngOnInit(): Promise<void> {
+    try {
+      const data = await this.tracksService.getTopTracks(10);
+      console.log("Топ треки:", data);
+      this.trackList = data.map(this.mapToTrack);
+    } catch (error) {
+      console.error("Ошибка загрузки треков:", error);
+    }
+  }
 }
