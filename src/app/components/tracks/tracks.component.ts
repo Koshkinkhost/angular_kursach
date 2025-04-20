@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { LastFmService } from '../../last-fm.service';
-import { Track } from './Track';
+
 import { ProviderService } from '../account/provider.service';
 import { RegistrationService } from '../../registration/RegistrationService';
 import { Router } from '@angular/router';
 import { TracksService } from '../top-tracks-main/tracks.service';
+import { Track } from '../top-tracks-main/TopTrack';
 @Component({
   selector: 'app-tracks',
   standalone: true,
@@ -14,7 +15,15 @@ providers:[LastFmService],
   styleUrl: './tracks.component.css'
 })
 export class TracksComponent {
-  
+  mapToTrack(data: any): Track {
+    return {
+      id:Number(data.trackId),
+      title: data.title,
+      trackArtist: data.track_Artist,
+      genreTrack: data.genre_track,
+      listenersCount: Number(data.listeners_count)
+    };
+  }
   
   yt_results:string[]=[];
   tracks:Track[]=[];
@@ -29,11 +38,9 @@ async ngOnInit(){
   if (isAuthenticated && storage_name) {
    
     const data=await this.tracksService.GetArtistTracks(Number(this.tracksService.selected_artist.id));
-
+this.tracks=data.tracks.map(this.mapToTrack);
   console.log(data);
-  for(let i=0;i<9;i++){
-    this.tracks.push(data.toptracks.track[i]);
-  }
+  
 
 
     // Вы можете также получить данные пользователя, например:

@@ -4,8 +4,8 @@
   <div class="track-list">
     @for(song of tracks; track $index) {
       <div class="track-item">
-        <div class="track-name">{{song.name}}</div>
-        <div class="track-listeners">{{song.listeners}} прослушиваний</div>
+        <div class="track-name">{{song.title}}</div>
+        <div class="track-listeners">{{song.listenersCount}} прослушиваний</div>
       </div>
     }
   </div>

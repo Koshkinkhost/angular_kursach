@@ -29,10 +29,18 @@ export const routes: Routes = [
   },
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'ArtisTracks', component: TracksComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
   {path:'adminka',component:AdminPanelComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {path:'Tracks',component: AllTracksComponent}
+  {
+    path: 'system',
+    component: InSystemComponent,
+    children: [
+      { path: 'ArtisTracks', component: TracksComponent },
+      { path: 'bio', component: ArtistBioComponent },
+    ]
+  }
 ];

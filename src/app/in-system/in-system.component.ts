@@ -16,12 +16,17 @@ async ngOnInit(){
  const n=localStorage.getItem('username');
  if(n!=null){
   this.name=n;
+  
+ }
+ if(this.registr.GetAuthState()){
+  this.router.navigate(['/ArtistTracks']);
  }
  
 }
 async logout() {
   console.log("нажал");
   localStorage.removeItem('username');
+  localStorage.removeItem('auth');
   this.registr.SetAuthState(false);
   await this.registr.LogOut();
  
