@@ -12,14 +12,7 @@ export class LastFmService {
   baseUrl: string = 'http://localhost:8082/api/v2'; // твой API
 
   artists: Artist[] = [
-    {
-      id: "1",
-      name: "Radiohead",
-      listeners: "12345678",
-      playCount: "87654321",
-      similar: ["Thom Yorke", "Muse", "Arcade Fire"],
-      registr_date: "2022-01-15"
-    },
+    
     // остальные...
   ];
 

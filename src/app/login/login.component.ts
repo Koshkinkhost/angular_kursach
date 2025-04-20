@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RegistrationService } from '../registration/RegistrationService';
 import { ProviderService } from '../components/account/provider.service';
 import { LastFmService } from '../last-fm.service';
+import { TracksService } from '../components/top-tracks-main/tracks.service';
+import { Artist } from '../components/Artist';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -12,7 +14,7 @@ templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router:Router,private login:RegistrationService,private lastfm:LastFmService){}
+  constructor(private router:Router,private login:RegistrationService,private lastfm:LastFmService,private trackService:TracksService){}
 errors:string[]=[];
 form_login:FormGroup=new FormGroup(
   {
@@ -49,6 +51,12 @@ async Loginn(){
 const result=await this.login.Login(form_value.login,form_value.password,form_value.role);
 const data=await result.json();
 this.errors.push(data.messages.Errors);
+this.trackService.selected_artist={
+  id:data.id,
+  name:data.name
+};
+console.log("ARTIS: ",this.trackService.selected_artist);
+
 
 localStorage.setItem('username',form_value.login);
 this.lastfm.changeUserName(form_value.login);

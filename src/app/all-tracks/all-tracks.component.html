@@ -1,0 +1,29 @@
+<div class="tracks-container">
+  <div class="search-container">
+    <input type="text" [formControl]="searchControl" placeholder="🔎 Поиск ..." class="search-input">
+    <button type="button" (click)="find_tracksByTitle()" class="search-button">Поиск</button>
+    <select class="filter-select">
+      <option value="artist">Артист</option>
+      <option value="track">Трек</option>
+    </select>
+    
+  </div>
+<div class="tracks-container">
+  @for(t of tracks;track $index){
+    <div class="track-card">
+      <div class="track-cover">
+        <img  alt="Обложка трека" src="rack_logo.png">
+      </div>
+      <div class="track-info">
+        
+        <h3 class="track-title">{{t.title}}</h3>
+        <p class="track-artist">👤{{t.trackArtist}}</p>
+        <p class="track-genre">🎵{{t.genreTrack}} </p>
+        <h3 class="track-plays">⏯️ {{t.listenersCount}}</h3>
+      </div>
+    </div>
+  }
+     
+    
+  </div>
+  

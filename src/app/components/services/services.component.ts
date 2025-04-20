@@ -39,6 +39,8 @@ export class ServicesComponent {
 
 
  show_product(artist:Artist){
+  console.log("АЙДИ АРТИСТА "+artist.id);
+this.artistsService.artis_id=Number(artist.id);
   this.route.navigate(['/desc',artist.id])
  }
  ngOnInit() {

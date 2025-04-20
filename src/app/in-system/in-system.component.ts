@@ -13,7 +13,10 @@ export class InSystemComponent {
   name:string=''
 constructor(public provide:ProviderService,private registr:RegistrationService,private router:Router){}
 async ngOnInit(){
- 
+ const n=localStorage.getItem('username');
+ if(n!=null){
+  this.name=n;
+ }
  
 }
 async logout() {

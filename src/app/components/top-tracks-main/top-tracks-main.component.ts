@@ -16,6 +16,7 @@ export class TopTracksMainComponent implements OnInit {
 
   mapToTrack(data: any): Track {
     return {
+      id:Number(data.trackId),
       title: data.title,
       trackArtist: data.track_Artist,
       genreTrack: data.genre_track,
@@ -25,7 +26,7 @@ export class TopTracksMainComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const data = await this.tracksService.getTopTracks(10);
+      const data = await this.tracksService.getTopTracks(30);
       console.log("Топ треки:", data);
       this.trackList = data.map(this.mapToTrack);
     } catch (error) {

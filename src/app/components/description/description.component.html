@@ -1,23 +1,29 @@
 <div class="main">
     <div class="containerr">
-        <!-- Верхняя часть: фото, слушатели и прослушивания -->
-        <div class="top-section">
-            <div class="photo">
-                <img src="{{artist_photo}}" alt="Фото артиста">
-            </div>
-            <div class="stats">
-                <h2 class="name">{{selectedArtist?.name}}</h2>
-            
-            </div>
+      <!-- Верхняя часть -->
+      <div class="top-section">
+        
+        <div class="stats">
+          <h2 class="name">{{selectedArtist?.name}}</h2>
         </div>
-
-       
-
-        <!-- Нижняя часть: имя и описание -->
-        <div class="bottom-section">
-            {{description}}
-            <!-- <p class="desc">{{selectedArtist?.description}}</p> -->
-        </div>
-       
+      </div>
+  
+      <!-- Список треков -->
+      <div  class="tracks-wrapper">
+        @for(t of tracks; track $index){
+          <div class="track-card">
+            <h3>{{t.title}}</h3>
+            <p><strong>Артист:</strong> {{t.trackArtist}}</p>
+        
+            <button type="button" (click)="IncreasePlayCounts(t.id)" class="btn-soft">Прослушать</button>
+          </div>
+        }
+      </div>
+  
+      <!-- Описание -->
+      <div class="bottom-section">
+        {{description}}
+      </div>
     </div>
-</div>
+  </div>
+  

@@ -17,6 +17,7 @@ import { authGuard } from './auth.guard';
 import { SimilarArtistsComponent } from './similar-artists/similar-artists.component';
 import { SystemModule } from './system/system.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AllTracksComponent } from './all-tracks/all-tracks.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -32,5 +33,6 @@ export const routes: Routes = [
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
   {path:'adminka',component:AdminPanelComponent},
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {path:'Tracks',component: AllTracksComponent}
 ];
