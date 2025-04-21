@@ -34,7 +34,7 @@ export const routes: Routes = [
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
   {path:'adminka',component:AdminPanelComponent},
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {path:'Tracks',component:AllTracksComponent},
   {
     path: 'system',
     component: InSystemComponent,

@@ -2,28 +2,48 @@
   <div class="search-container">
     <input type="text" [formControl]="searchControl" placeholder="🔎 Поиск ..." class="search-input">
     <button type="button" (click)="find_tracksByTitle()" class="search-button">Поиск</button>
-    <select class="filter-select">
-      <option value="artist">Артист</option>
-      <option value="track">Трек</option>
-    </select>
-    
+    <button type="button" style="background-color: blue;" (click)="reset()" class="search-button">Сброс</button>
   </div>
-<div class="tracks-container">
-  @for(t of tracks;track $index){
-    <div class="track-card">
-      <div class="track-cover">
-        <img  alt="Обложка трека" src="rack_logo.png">
+
+  <div class="tracks-container">
+    @for (t of tracks; track $index) {
+      <div class="track-card">
+        <div class="track-cover">
+          <img alt="Обложка трека" src="rack_logo.png">
+        </div>
+        <div class="track-info">
+
+          <!-- Если не в режиме редактирования, показываем обычную информацию -->
+          @if (!t.isEditing) {
+            <h3 class="track-title">{{ t.title }}</h3>
+            <p class="track-artist">👤{{ t.trackArtist }}</p>
+            <p class="track-genre">🎵{{ t.genreTrack }}</p>
+            <h3 class="track-plays">⏯️ {{ t.listenersCount }}</h3>
+          }
+
+          <!-- Если в режиме редактирования, показываем инпуты -->
+          @if (t.isEditing) {
+            <input type="text" [(ngModel)]="t.title" placeholder="Название трека" class="input-field">
+            <input type="text" [(ngModel)]="t.trackArtist" placeholder="Артист" class="input-field">
+            <select [(ngModel)]="t.genreTrack" class="input-field">
+              @for( g of genres;track $index){
+                <option  >{{ g }}</option>
+
+              }
+            </select>
+            
+          
+            <button (click)="saveTrack(t)" class="input-button">Сохранить</button>
+            <button (click)="cancelEdit(t)" class="input-button">Отмена</button>
+          }
+
+        </div>
+
+        <!-- Кнопка для редактирования (если пользователь админ) -->
+        @if (this.IsAdmin && !t.isEditing) {
+          <button (click)="editTrack(t)">Редактировать</button>
+        }
       </div>
-      <div class="track-info">
-        
-        <h3 class="track-title">{{t.title}}</h3>
-        <p class="track-artist">👤{{t.trackArtist}}</p>
-        <p class="track-genre">🎵{{t.genreTrack}} </p>
-        <h3 class="track-plays">⏯️ {{t.listenersCount}}</h3>
-      </div>
-    </div>
-  }
-     
-    
+    }
   </div>
-  
+</div>

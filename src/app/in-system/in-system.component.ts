@@ -25,24 +25,21 @@ async ngOnInit(){
 }
 async logout() {
   console.log("нажал");
-  localStorage.removeItem('username');
-  localStorage.removeItem('auth');
-  this.registr.SetAuthState(false);
-  await this.registr.LogOut();
- 
-  this.registr.SetRole('');
- 
-  const result =   this.registr.GetAuthState();
-  console.log("Результат CheckAuthentication: ", result);
+
+  await this.registr.LogOut(); // только очистка и запрос
+
+  const result = await this.registr.CheckAuthentication(); // тут точно вызовется
+
+  console.log("CheckAuthentication: ", result);
 
   if (!result) {
     console.log("Выход выполнен");
     this.router.navigate(['/login']);
-
   } else {
     console.log("Не удалось выйти, остаёмся в системе");
   }
 }
+
 
 
 

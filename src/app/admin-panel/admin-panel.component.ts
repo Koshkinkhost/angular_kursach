@@ -1,21 +1,31 @@
 import { Component } from '@angular/core';
 import { RegistrationService } from '../registration/RegistrationService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
   imports: [],
-  templateUrl: './admin-panel.component.html',
+templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css'
 })
 export class AdminPanelComponent {
-  constructor(private registr:RegistrationService){}
-  async logout(){
-    console.log("нажал админ")
-    
-    await this.registr.LogOut();
-   
-    
+  constructor(private registr:RegistrationService,private router:Router){}
+  async logout() {
+    console.log("нажал");
+  
+    await this.registr.LogOut(); // только очистка и запрос
+  
+    const result = await this.registr.CheckAuthentication(); // тут точно вызовется
+  
+    console.log("CheckAuthentication: ", result);
+  
+    if (!result) {
+      console.log("Выход выполнен");
+      this.router.navigate(['/login']);
+    } else {
+      console.log("Не удалось выйти, остаёмся в системе");
+    }
   }
   
 

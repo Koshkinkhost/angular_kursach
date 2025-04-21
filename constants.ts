@@ -3,7 +3,7 @@ export const API_URLS = {
     BASE_URL: "http://localhost:8082/api/v2/Account",
     REGISTRATION: "/Registration",
     LOGIN: "/Login",
-    LOGOUT: "/LogOut",
+
     CHECK_ADMIN: "/CheckRights",
     CHECK_ROLE: "/GetUserRole",
     NEWS: "http://localhost:8082/api/v2/News/GetNews",
@@ -14,6 +14,10 @@ export const API_URLS = {
     ALL_TRACKS:"http://localhost:8082/api/v2/Track/GetAllTracks",
     INCREASE_PLAYS:"http://localhost:8082/api/v2/Track/IncrementListens",
     TRACKS_BY_TITLE:"http://localhost:8082/api/v2/Track/GetTracksByTitle",
+    LOGIN_ADMIN: "http://localhost:8082/api/v2/Account/LoginAdmin",
+    LOG_OUT:"http://localhost:8082/api/v2/Account/LogOut",
+    UPDATE_TRACK:"http://localhost:8082/api/v2/Track/UpdateTrack",
+
    
   };
   

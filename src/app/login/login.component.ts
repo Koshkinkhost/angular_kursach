@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         case 'Artist':
           this.router.navigate(['/system']);
           break;
-        case 'Admin':
+        case 'admin':
           this.router.navigate(['/adminka']);
           break;
         default:
@@ -53,55 +53,57 @@ export class LoginComponent implements OnInit {
   }
 
   redirect() {
-    const form_value = this.form_login.getRawValue();
-    console.log(form_value.role, form_value.password, form_value.role);
     this.router.navigate(['/register']);
   }
 
   async Loginn() {
     this.errors = [];
     const form_value = this.form_login.getRawValue();
-    console.log(form_value.login, form_value.password, form_value.role);
-
-    const result = await this.login.Login(form_value.login, form_value.password, form_value.role);
-    const data = await result.json();
-
-    if (data.messages && data.messages.Errors) {
-      this.errors.push(data.messages.Errors);
-    }
-
-    // Сохраняем текущего артиста
-    this.trackService.selected_artist = {
-      id: data.id,
-      name: data.name
-    };
-
-    // Сохраняем в localStorage
-    localStorage.setItem('username', form_value.login);
-    localStorage.setItem('auth', 'true');
-    this.lastfm.changeUserName(form_value.login);
-    this.login.user_role = form_value.role;
-
-    if (data.success) {
+    console.log("TRY LOGIN:", form_value.login, form_value.password, form_value.role);
+  
+    let result: Response;
+  
+    try {
+      // Вызываем нужный эндпоинт
+      if (form_value.role.toLowerCase() === 'admin') {
+        result = await this.login.LoginAdmin(form_value.login, form_value.password, form_value.role);
+      } else {
+        result = await this.login.Login(form_value.login, form_value.password, form_value.role);
+      }
+  
+      const data = await result.json();
+  
+      if (!data.success) {
+        if (data.messages?.Errors) {
+          this.errors.push(...data.messages.Errors);
+        } else {
+          this.errors.push('Неверный логин или пароль.');
+        }
+        return; // не продолжаем
+      }
+  
+      // Если всё ок — продолжаем
+      localStorage.setItem('username', form_value.login);
+      localStorage.setItem('auth', 'true');
+      localStorage.setItem('role', form_value.role);
+      console.log("с формы" ,form_value.role);
+      this.lastfm.changeUserName(form_value.login);
+      this.login.SetAuthState(true);
+      this.login.SetRole(form_value.role);
+  
       if (form_value.role.toLowerCase() !== 'admin') {
-        this.login.SetAuthState(true);
-        this.login.SetRole('Artist');
-        localStorage.setItem('role', 'Artist');
+        this.trackService.selected_artist = {
+          id: data.id,
+          name: data.name
+        };
         this.router.navigate(['/system']);
       } else {
-        this.login.SetAuthState(true);
-        this.login.SetRole('Admin');
-        localStorage.setItem('role', 'Admin');
         this.router.navigate(['/adminka']);
       }
+    } catch (err) {
+      this.errors.push('Ошибка входа. Проверьте данные.');
+      console.error(err);
     }
   }
-
-  logout() {
-    localStorage.removeItem('role');
-    localStorage.removeItem('auth');
-    localStorage.removeItem('username');
-    this.login.SetAuthState(false);
-    this.router.navigate(['/login']);
-  }
+  
 }

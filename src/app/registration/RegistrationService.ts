@@ -11,7 +11,7 @@ export class RegistrationService {
 
   url: string = `${API_URLS.BASE_URL}${API_URLS.REGISTRATION}`;
   url_log: string = `${API_URLS.BASE_URL}${API_URLS.LOGIN}`;
-  url_logOut: string = `${API_URLS.BASE_URL}${API_URLS.LOGOUT}`;
+  url_logOut: string = `${API_URLS.LOG_OUT}`;
   url_check_admin: string = `${API_URLS.BASE_URL}${API_URLS.CHECK_ADMIN}`;
   url_check_role: string = `${API_URLS.BASE_URL}${API_URLS.CHECK_ROLE}`;
   url_news: string = API_URLS.NEWS;
@@ -77,6 +77,19 @@ export class RegistrationService {
 
     return request;
   }
+ 
+  
+  LoginAdmin(login: string, password: string, role: string) {
+    return fetch(API_URLS.LOGIN_ADMIN, {
+      method: 'POST',
+      body: JSON.stringify({ login, password, role }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    });
+  }
+  
 
   async Registration(login: string, password: string, confirmPassword: string): Promise<any> {
     try {
@@ -131,19 +144,20 @@ export class RegistrationService {
     const headers = new Headers({
       'Content-Type': 'application/json'
     });
-
+  
     const request = await fetch(this.url_logOut, {
       method: 'POST',
       headers: headers,
       credentials: 'include',
       body: JSON.stringify({})
     });
-
+  
     if (request.ok) {
       this.SetAuthState(false);
       console.log("состояние аутентификации " + this.GetAuthState());
       localStorage.removeItem('username');
-      this.router.navigate(["/"]);
+      localStorage.removeItem('role');
+      localStorage.removeItem('auth');
       this.SetRole('None');
       console.log("РОЛЬ В СЕРВИСЕ ", this.GetCurrentRole());
       console.log("User logged out.");
@@ -151,6 +165,7 @@ export class RegistrationService {
       console.error("Logout failed.");
     }
   }
+  
 
   async check_Rights(login: string) {
     const headers = new Headers({

@@ -3,25 +3,24 @@ import { API_URLS } from '../../../../constants';
 import { Track } from './TopTrack';
 import { BehaviorSubject } from 'rxjs';
 import { Artist } from '../Artist';
+import { EditTracks } from '../../all-tracks/EditTracks';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TracksService {
   
+  private tracksSubject = new BehaviorSubject<EditTracks[]>([]); // Согласуем типы
+  tracks$ = this.tracksSubject.asObservable();  // Публикуем это как Observable для подписки
 
- 
-  constructor() { }
-  selected_artist:Artist=
-  {id:'',
-    name:'',
-    
-  };
+  constructor() {}
+
+  selected_artist: Artist = { id: '', name: '' };
 
   async getTopTracks(n: number): Promise<any[]> {
     const response = await fetch(`${API_URLS.TOP_TRACKS}?n=${n}`, {
       method: 'GET',
-      credentials: 'include' 
+      credentials: 'include'
     });
 
     if (!response.ok) {
@@ -30,6 +29,7 @@ export class TracksService {
 
     return await response.json();
   }
+
   async GetArtistTracks(id: number): Promise<any> {
     const response = await fetch(`${API_URLS.ARTIST_TRACKS}`, {
       method: 'POST',
@@ -46,10 +46,11 @@ export class TracksService {
   
     return await response.json();
   }
+
   async getAllTracks(): Promise<any[]> {
     const response = await fetch(`${API_URLS.ALL_TRACKS}`, {
       method: 'GET',
-      credentials: 'include' 
+      credentials: 'include'
     });
 
     if (!response.ok) {
@@ -58,6 +59,7 @@ export class TracksService {
 
     return await response.json();
   }
+
   async IncrementPlays(trackId: Number): Promise<any> {
     const response = await fetch(`${API_URLS.INCREASE_PLAYS}`, {
       method: 'POST',
@@ -74,8 +76,9 @@ export class TracksService {
   
     return await response;
   }
+
   async TracksByTitle(Title: string): Promise<any> {
-    console.log(Title," из сервиса");
+    console.log(Title, " из сервиса");
     const response = await fetch(`${API_URLS.TRACKS_BY_TITLE}`, {
       method: 'POST',
       credentials: 'include',
@@ -91,5 +94,32 @@ export class TracksService {
   
     return await response.json();
   }
-  
+
+  async editTrack(track: EditTracks): Promise<EditTracks[]> {
+    const updatedTrack = {
+      trackId: track.trackId,
+      title: track.title,
+      trackArtist: track.trackArtist,
+      GenreName: track.genreTrack,
+      listenersCount: track.listenersCount,
+      AlbumId:track.AlbumId
+    };
+
+    const response = await fetch(`${API_URLS.UPDATE_TRACK}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedTrack),
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при обновлении трека');
+    }
+
+    const updatedTracks = await response.json();
+    this.tracksSubject.next(updatedTracks); // Обновляем данные в BehaviorSubject
+    return updatedTracks;
+  }
 }
