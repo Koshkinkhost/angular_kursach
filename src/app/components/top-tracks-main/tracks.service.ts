@@ -9,7 +9,18 @@ import { EditTracks } from '../../all-tracks/EditTracks';
   providedIn: 'root'
 })
 export class TracksService {
-  
+  private artistNameSubject = new BehaviorSubject<string | null>(localStorage.getItem('artistName'));
+  public artistName$ = this.artistNameSubject.asObservable();
+
+  setArtistName(name: string) {
+    this.artistNameSubject.next(name);
+    localStorage.setItem('artistName', name);
+  }
+
+  clearArtistName() {
+    this.artistNameSubject.next(null);
+    localStorage.removeItem('artistName');
+  }
   private tracksSubject = new BehaviorSubject<EditTracks[]>([]); // Согласуем типы
   tracks$ = this.tracksSubject.asObservable();  // Публикуем это как Observable для подписки
 
@@ -68,6 +79,22 @@ export class TracksService {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ trackId }) // Передаём ID в теле запроса
+    });
+  
+    if (!response.ok) {
+      throw new Error('Ошибка при получении топ треков');
+    }
+  
+    return await response;
+  }
+  async GetMoney(id: Number): Promise<any> {
+    const response = await fetch(`${API_URLS.GET_ALL_ROYALTY}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id }) // Передаём ID в теле запроса
     });
   
     if (!response.ok) {

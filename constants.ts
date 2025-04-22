@@ -17,6 +17,7 @@ export const API_URLS = {
     LOGIN_ADMIN: "http://localhost:8082/api/v2/Account/LoginAdmin",
     LOG_OUT:"http://localhost:8082/api/v2/Account/LogOut",
     UPDATE_TRACK:"http://localhost:8082/api/v2/Track/UpdateTrack",
+    GET_ALL_ROYALTY:"http://localhost:8082/api/v2/Royalti/GetTotalMoney"
 
    
   };

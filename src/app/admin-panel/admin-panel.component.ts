@@ -17,7 +17,7 @@ export class AdminPanelComponent {
     await this.registr.LogOut(); // только очистка и запрос
   
     const result = await this.registr.CheckAuthentication(); // тут точно вызовется
-  
+    localStorage.clear();
     console.log("CheckAuthentication: ", result);
   
     if (!result) {

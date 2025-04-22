@@ -29,11 +29,17 @@ export class RegistrationService {
 
   private tokenKey = "authToken";
 
-  async GetNews() {
-    const request = await fetch(this.url_news, {
+  async GetNews(): Promise<any[]> {
+    const response = await fetch(`${API_URLS.NEWS}`, {
       method: 'GET',
+      credentials: 'include'
     });
-    return request.json();
+
+    if (!response.ok) {
+      throw new Error('Ошибка при получении топ треков');
+    }
+
+    return await response.json();
   }
 
   SetRole(role: string) {

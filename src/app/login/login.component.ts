@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
     role: new FormControl('', Validators.required)
   });
 
-  ngOnInit() {
+  async ngOnInit() {
     const storedRole = localStorage.getItem('role');
     const isAuth = localStorage.getItem('auth') === 'true';
-
-    if (isAuth && storedRole) {
+    const result = await this.login.CheckAuthentication();
+    if (result && storedRole) {
       this.login.SetRole(storedRole);
       this.login.SetAuthState(true);
 
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.errors = [];
     const form_value = this.form_login.getRawValue();
     console.log("TRY LOGIN:", form_value.login, form_value.password, form_value.role);
-  
+  console.log(localStorage.getItem('username'));
     let result: Response;
   
     try {
@@ -69,6 +69,9 @@ export class LoginComponent implements OnInit {
         result = await this.login.LoginAdmin(form_value.login, form_value.password, form_value.role);
       } else {
         result = await this.login.Login(form_value.login, form_value.password, form_value.role);
+        localStorage.setItem('username', form_value.login);
+        this.trackService.setArtistName(form_value.login);
+        console.log(this.trackService.selected_artist.name,"ЗАПИСАЛ В СЕРВИС");
       }
   
       const data = await result.json();

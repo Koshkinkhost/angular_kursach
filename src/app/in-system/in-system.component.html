@@ -1,16 +1,18 @@
-<div class="dashboard-container">
-    <header class="dashboard-header">
-      <h1 class="dashboard-title">{{this.name}}</h1>
-      <button   (click)="logout()" class="exit">Выход</button>
-    </header>
-  
-    <nav class="dashboard-menu">
-      <a routerLink="/system/bio" routerLinkActive="active" class="menu-link">Личная информация</a>
-      <a routerLink="/ArtisTracks" routerLinkActive="active" class="menu-link">Треки</a>
-    </nav>
-  
-    <main class="dashboard-content">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-  
+<div class="dashboard">
+  <header class="dashboard__header">
+    <div class="dashboard__user">
+      <h1 class="dashboard__title">{{ this.name }}</h1>
+      <p class="dashboard__income">Общий доход со стримингов: <span>{{ this.royalty }} $</span></p>
+    </div>
+    <button (click)="logout()" class="dashboard__logout">Выход</button>
+  </header>
+
+  <nav class="dashboard__nav">
+    <a routerLink="/system/bio" routerLinkActive="active" class="dashboard__link">Личная информация</a>
+    <a routerLink="/ArtisTracks" routerLinkActive="active" class="dashboard__link">Треки</a>
+  </nav>
+
+  <main class="dashboard__main">
+    <router-outlet></router-outlet>
+  </main>
+</div>
