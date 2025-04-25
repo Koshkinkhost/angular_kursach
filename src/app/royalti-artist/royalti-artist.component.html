@@ -1,0 +1,11 @@
+<h2>Прибыль по трекам артиста</h2>
+
+<ul>
+  @for (trackName of earningsArray ; track $index) {
+    <li>
+      <strong>{{ trackName.title }}||{{trackName.total}}</strong>
+    </li>
+  }
+</ul>
+
+

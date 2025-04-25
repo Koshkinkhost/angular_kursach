@@ -70,6 +70,22 @@ export class TracksService {
 
     return await response.json();
   }
+  async getTrackEarningsByArtistId(id: number): Promise<{ [title: string]: number }> {
+    const response = await fetch(`${API_URLS.MONEY_BY_TRACK}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id }) // Передаём ID в теле запроса
+    });
+  
+    if (!response.ok) {
+      throw new Error('Ошибка при получении топ треков');
+    }
+  
+    return await response.json();
+  }
 
   async IncrementPlays(trackId: Number): Promise<any> {
     const response = await fetch(`${API_URLS.INCREASE_PLAYS}`, {

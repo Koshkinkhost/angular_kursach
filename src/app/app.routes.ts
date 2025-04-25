@@ -18,6 +18,7 @@ import { SimilarArtistsComponent } from './similar-artists/similar-artists.compo
 import { SystemModule } from './system/system.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AllTracksComponent } from './all-tracks/all-tracks.component';
+import { RoyaltiArtistComponent } from './royalti-artist/royalti-artist.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -41,6 +42,10 @@ export const routes: Routes = [
     children: [
       { path: 'ArtisTracks', component: TracksComponent },
       { path: 'bio', component: ArtistBioComponent },
+      { path: 'similar', component: SimilarArtistsComponent },
+      { path: 'royalti', component: RoyaltiArtistComponent },
+
+
     ]
   }
 ];

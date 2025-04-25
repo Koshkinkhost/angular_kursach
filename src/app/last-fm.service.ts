@@ -10,7 +10,7 @@ export class LastFmService {
   userName$ = this.userNameSubject.asObservable();
 
   baseUrl: string = 'http://localhost:8082/api/v2'; // твой API
-
+apiKey:string='82f94568fc605693fd5370ebd312635d';
   artists: Artist[] = [
     
     // остальные...
@@ -63,13 +63,18 @@ async TopTracks(name: string): Promise<any> {
   }
 
   // Найти похожих артистов
-  async Get_Similar_Artists(artist: string): Promise<any> {
-    const response = await fetch(`${this.baseUrl}/artists/${artist}/similar`);
-    if (!response.ok) {
-      throw new Error('Ошибка при получении данных похожих артистов');
-    }
-    return await response.json();
+ // Найти похожих артистов (через Last.fm API напрямую)
+async Get_Similar_Artists(artist: string): Promise<any> {
+  
+  const url = `https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${(artist)}&api_key=${this.apiKey}&format=json`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Ошибка при получении данных похожих артистов');
   }
+  return await response.json();
+}
+
 
   // Поиск изображений через Google API
   async find_photo(query: string): Promise<any> {

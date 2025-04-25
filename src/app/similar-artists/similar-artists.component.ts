@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LastFmService } from '../last-fm.service';
 import { RegistrationService } from '../registration/RegistrationService';
 import { Router } from '@angular/router';
+import { TracksService } from '../components/top-tracks-main/tracks.service';
 @Component({
   selector: 'app-similar-artists',
   standalone: true,
@@ -10,9 +11,14 @@ import { Router } from '@angular/router';
   styleUrl: './similar-artists.component.css'
 })
 export class SimilarArtistsComponent {
+  
+  name:string|null='';
   similar_artists: { name: string; match: string; url: string }[] = [];
-  constructor(private lastfm:LastFmService,private registr:RegistrationService,private router:Router){}
+  constructor(private lastfm:LastFmService,private registr:RegistrationService,private router:Router,private tracksService:TracksService ){}
   async ngOnInit(){
+    this.tracksService.artistName$.subscribe((name:string|null)=>{
+      this.name=name;
+    })
     const isAuthenticated =  this.registr.GetAuthState();
     if (isAuthenticated) {
   console.log("в системе")
@@ -31,7 +37,8 @@ export class SimilarArtistsComponent {
 }
 // Логика компонента
 async Similar(){
- const artist_name=this.lastfm.GetUserName();
+ 
+ const artist_name=this.name;
  if(artist_name){
   const result=await this.lastfm.Get_Similar_Artists(artist_name);
   return result;
