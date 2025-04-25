@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/adminka']);
       }
     } catch (err) {
-      this.errors.push('Ошибка входа. Проверьте данные.');
+      this.errors.push('Ошибка входа.');  
       console.error(err);
     }
   }

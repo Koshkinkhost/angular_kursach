@@ -4,6 +4,7 @@ import { Track } from './TopTrack';
 import { BehaviorSubject } from 'rxjs';
 import { Artist } from '../Artist';
 import { EditTracks } from '../../all-tracks/EditTracks';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +87,7 @@ export class TracksService {
   
     return await response.json();
   }
+  
 
   async IncrementPlays(trackId: Number): Promise<any> {
     const response = await fetch(`${API_URLS.INCREASE_PLAYS}`, {
@@ -149,6 +151,34 @@ export class TracksService {
     };
 
     const response = await fetch(`${API_URLS.UPDATE_TRACK}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedTrack),
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при обновлении трека');
+    }
+
+    const updatedTracks = await response.json();
+    this.tracksSubject.next(updatedTracks); // Обновляем данные в BehaviorSubject
+    return updatedTracks;
+  }
+  async AddTrack(track: EditTracks): Promise<EditTracks[]> {
+    const updatedTrack = {
+      ArtistId:track.ArtistId,
+      trackId: track.trackId,
+      title: track.title,
+      trackArtist: track.trackArtist,
+      Genre_track: track.genreTrack,
+      listenersCount: track.listenersCount,
+      AlbumId:track.AlbumId
+    };
+
+    const response = await fetch(`${API_URLS.ADD_TRACK}`, {
       method: 'POST',
       credentials: 'include',
       headers: {

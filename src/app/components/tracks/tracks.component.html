@@ -1,6 +1,21 @@
 <div class="artist-top-tracks">
   <h2>Топ треки</h2>
+
+  <!-- Reactive Form -->
+  <form [formGroup]="trackForm" (onsubmit)="addTrack()" class="add-track-form" >
+    <input type="text" formControlName="title" placeholder="Название трека" />
+    
+    
+    <select placeholder="Выберите жанр" formControlName="genre_track">
+      <option value="" disabled selected>Выберите жанр</option>
+      @for (g of genres; track $index) {
+        <option formControlName="genre_track" [value]="g">{{ g }}</option>
+      }
+    </select>
   
+    <button (click)="addTrack()" >Добавить</button>
+  </form>
+
   <div class="track-list">
     @for(song of tracks; track $index) {
       <div class="track-item">

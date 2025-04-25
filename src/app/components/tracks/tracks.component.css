@@ -46,6 +46,25 @@ width:60vw;
   font-size: 16px;
   color: #777;
 }
+.add-track-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-track-form input {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.add-track-form button {
+  padding: 6px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 1024px) {

@@ -40,10 +40,11 @@ export const routes: Routes = [
     path: 'system',
     component: InSystemComponent,
     children: [
-      { path: 'ArtisTracks', component: TracksComponent },
+      { path: 'ArtistTracks', component: TracksComponent },
       { path: 'bio', component: ArtistBioComponent },
       { path: 'similar', component: SimilarArtistsComponent },
       { path: 'royalti', component: RoyaltiArtistComponent },
+      
 
 
     ]

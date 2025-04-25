@@ -1,9 +1,10 @@
 export interface EditTracks {
-    trackId: number;
+  ArtistId?:number,
+    trackId?: number|null;
     title: string;
     trackArtist: string;
     genreTrack: string;
-    AlbumId:number,
+    AlbumId:number|null,
     listenersCount: number;
     isEditing?: boolean; // <-- Добавили
   }

@@ -18,7 +18,8 @@ export const API_URLS = {
     LOG_OUT:"http://localhost:8082/api/v2/Account/LogOut",
     UPDATE_TRACK:"http://localhost:8082/api/v2/Track/UpdateTrack",
     GET_ALL_ROYALTY:"http://localhost:8082/api/v2/Royalti/GetTotalMoney",
-    MONEY_BY_TRACK:"http://localhost:8082/api/v2/Royalti/GetTracksRoyalti"
+    MONEY_BY_TRACK:"http://localhost:8082/api/v2/Royalti/GetTracksRoyalti",
+    ADD_TRACK:"http://localhost:8082/api/v2/Track/AddTrack",
 
    
   };
