@@ -14,7 +14,7 @@ export class RoyaltiArtistComponent {
   earningsArray: { title: string; total: number }[] = [];
 
   async ngOnInit() {
-    const artistId = this.tracksService.selected_artist.id; // Заменить на реальный ID артиста (можно получить динамически)
+    const artistId = Number(this.tracksService.getSelectedArtist()?.id) // Заменить на реальный ID артиста (можно получить динамически)
       this.earningsByTrack = await this.tracksService.getTrackEarningsByArtistId(Number(artistId));
     console.log(this.earningsByTrack);
     this.earningsArray = Object.entries(this.earningsByTrack).map(

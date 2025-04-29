@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RegistrationService } from '../registration/RegistrationService';
 import { LastFmService } from '../last-fm.service';
 import { TracksService } from '../components/top-tracks-main/tracks.service';
-
+import { Artist } from '../components/Artist';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -95,10 +95,13 @@ export class LoginComponent implements OnInit {
       this.login.SetRole(form_value.role);
   
       if (form_value.role.toLowerCase() !== 'admin') {
-        this.trackService.selected_artist = {
-          id: data.id,
-          name: data.name
-        };
+        const artist: Artist = {
+          id: data.id, // ID артиста из ответа сервера
+          name: data.name // Имя артиста из ответа сервера
+      };
+
+      // Устанавливаем выбранного артиста в сервисе
+      this.trackService.setSelectedArtist(artist);
         this.router.navigate(['/system']);
       } else {
         this.router.navigate(['/adminka']);

@@ -13,6 +13,28 @@ export class TracksService {
   private artistNameSubject = new BehaviorSubject<string | null>(localStorage.getItem('artistName'));
   public artistName$ = this.artistNameSubject.asObservable();
 
+
+  // BehaviorSubject для хранения выбранного артиста
+  private selectedArtistSubject = new BehaviorSubject<Artist | null>(
+    JSON.parse(localStorage.getItem('selectedArtist') || 'null')
+  );
+  public selectedArtist$ = this.selectedArtistSubject.asObservable();
+
+  // Установка выбранного артиста
+  setSelectedArtist(artist: Artist) {
+    this.selectedArtistSubject.next(artist);
+    localStorage.setItem('selectedArtist', JSON.stringify(artist)); // сохраняем в localStorage
+  }
+  // Получение текущего значения выбранного артиста
+  getSelectedArtist(): Artist | null {
+    return this.selectedArtistSubject.getValue();
+  }
+
+  // Очистка выбранного артиста
+  clearSelectedArtist() {
+    this.selectedArtistSubject.next(null);
+  }
+
   setArtistName(name: string) {
     this.artistNameSubject.next(name);
     localStorage.setItem('artistName', name);

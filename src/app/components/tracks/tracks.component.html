@@ -12,6 +12,7 @@
       Добавить альбом
     </label>
   </div>
+
   @if (selectedContentType === 'track') {
     <form [formGroup]="trackForm" (ngSubmit)="addTrack()" class="form">
       <h3>Добавить трек</h3>
@@ -34,13 +35,14 @@
       <button type="submit" class="submit-btn">Сохранить трек</button>
     </form>
   }
+
   <!-- Форма для альбома -->
   @if (selectedContentType === 'album') {
     <form [formGroup]="albumForm" (ngSubmit)="addAlbum()" class="form">
       <h3>Добавить альбом</h3>
       <div class="form-field">
         <label>Название альбома:</label>
-        <input formControlName="Name" required /> <!-- Переименовано из albumName -->
+        <input formControlName="Name" required />
       </div>
       <div class="form-field">
         <label>Дата выпуска:</label>
@@ -75,5 +77,25 @@
       <button type="button" (click)="addTrackField()" class="add-track-btn">+ Добавить трек</button>
       <button type="submit" class="submit-btn">Сохранить альбом</button>
     </form>
+  }
+
+  <!-- Вывод треков артиста -->
+  
+</div>
+
+<div class="artist-tracks">
+  <h3>Треки артиста</h3>
+  @if (tracks.length > 0) {
+    <ul class="tracks-list">
+      @for (track of tracks; track $index) {
+        <li class="track-item">
+          <span class="track-title">{{ track.title }}</span>
+          <span class="track-genre">{{ track.genreTrack }}</span>
+          <span class="track-listens">(Прослушиваний: {{ track.listenersCount }})</span>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="no-tracks">У этого артиста пока нет треков.</p>
   }
 </div>

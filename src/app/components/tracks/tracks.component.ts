@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormsModule } from '@angular/forms';
 import { TracksService } from '../top-tracks-main/tracks.service'; // Импортируем сервис
 import { EditTracks } from '../../all-tracks/EditTracks'; // Импортируем интерфейс
 import {ReactiveFormsModule} from '@angular/forms'; // Импортируем модуль для работы с формами
+import { Router } from '@angular/router';
+import { Track } from '../top-tracks-main/TopTrack';
+  import { RegistrationService } from '../../registration/RegistrationService';
+import { Artist } from '../Artist';
 @Component({
   selector: 'app-tracks',
   standalone: true,
@@ -14,11 +18,22 @@ import {ReactiveFormsModule} from '@angular/forms'; // Импортируем м
 export class TracksComponent {
   selectedContentType: 'track' | 'album' = 'track'; // Тип добавляемого контента
   trackForm: FormGroup;
+  tracks:EditTracks[]=[];
+  selected_artist:Artist={id:'',name:''};
   albumForm: FormGroup;
   genres: string[] = ['Pop', 'Rock', 'Hip-Hop', 'Blues', 'Classical', 'Electronic'];
   selectedFile: File | null = null; // Переменная для хранения выбранного файла
-
-  constructor(private fb: FormBuilder, private tracksService: TracksService) {
+  mapToTrack(data: any): Track {
+    return {
+      id:Number(data.trackId),
+      title: data.title,
+      trackArtist: data.track_Artist,
+      genreTrack: data.genre_track,
+      listenersCount: Number(data.listeners_count)
+    };
+  }
+  constructor(private fb: FormBuilder, private tracksService: TracksService,private router:Router,private registr:RegistrationService) {
+    
     // Форма для добавления трека
     this.trackForm = this.fb.group({
       title: ['', Validators.required],
@@ -31,6 +46,41 @@ export class TracksComponent {
       releaseDate: ['', Validators.required], // Дата выпуска
       tracks: this.fb.array([]), // Массив для треков
     });
+  }
+
+  async ngOnInit(){
+    this.tracksService.tracks$.subscribe((tracks: EditTracks[]) => {
+      this.tracks = tracks; // Обновляем локальное состояние
+    });
+    this.tracksService.selectedArtist$.subscribe((artist: Artist | null) => {
+      if (artist) {
+        this.selected_artist = artist;
+      }
+    });
+    console.log("айди артиста",Number(this.selected_artist.id));
+    const isAuthenticated =  await this.registr.CheckAuthentication();
+    // const role_check=await this.registr.Check_Roles();
+    // console.log(role_check);//проверка РОЛИ
+  
+    const storage_name=localStorage.getItem('username');
+    if (isAuthenticated && storage_name) {
+     
+      const data=await this.tracksService.GetArtistTracks(Number(this.selected_artist.id));
+  this.tracks=data.tracks.map(this.mapToTrack);
+    console.log(data);
+    
+  
+  
+      // Вы можете также получить данные пользователя, например:
+       // Подгрузите реальное имя с сервера, если требуется
+    } else {
+        this.router.navigate(['/login']);
+    }
+  
+   
+    
+   
+  
   }
 
   // Получаем массив треков из формы альбома
@@ -66,7 +116,7 @@ export class TracksComponent {
 
     // Создаем объект, соответствующий интерфейсу EditTracks
     const newTrack: EditTracks = {
-      ArtistId: Number(this.tracksService.selected_artist.id), // ID артиста
+      ArtistId: Number(this.selected_artist.id), // ID артиста
       trackId: null, // ID трека (неизвестен при создании)
       title: this.trackForm.value.title, // Название трека
       trackArtist: this.tracksService.selected_artist.name, // Имя артиста
@@ -96,7 +146,7 @@ export class TracksComponent {
 
     // Создаем данные альбома
     const albumData = {
-      ArtistId: Number(this.tracksService.selected_artist.id),
+      ArtistId: Number(),
       Name: this.albumForm.value.Name, // Название альбома
       releaseDate: this.albumForm.value.releaseDate, // Дата выпуска
       tracks: this.albumForm.value.tracks.map((track: any) => ({
