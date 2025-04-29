@@ -2,7 +2,7 @@ export interface EditTracks {
   ArtistId?:number,
     trackId?: number|null;
     title: string;
-    trackArtist: string;
+    trackArtist?: string;
     genreTrack: string;
     AlbumId:number|null,
     listenersCount: number;

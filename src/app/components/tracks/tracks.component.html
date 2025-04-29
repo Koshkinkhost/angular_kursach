@@ -1,27 +1,79 @@
-<div class="artist-top-tracks">
-  <h2>Топ треки</h2>
+<div class="content-container">
+  <h2>Добавить контент</h2>
 
-  <!-- Reactive Form -->
-  <form [formGroup]="trackForm" (onsubmit)="addTrack()" class="add-track-form" >
-    <input type="text" formControlName="title" placeholder="Название трека" />
-    
-    
-    <select placeholder="Выберите жанр" formControlName="genre_track">
-      <option value="" disabled selected>Выберите жанр</option>
-      @for (g of genres; track $index) {
-        <option formControlName="genre_track" [value]="g">{{ g }}</option>
-      }
-    </select>
-  
-    <button (click)="addTrack()" >Добавить</button>
-  </form>
-
-  <div class="track-list">
-    @for(song of tracks; track $index) {
-      <div class="track-item">
-        <div class="track-name">{{song.title}}</div>
-        <div class="track-listeners">{{song.listenersCount}} прослушиваний</div>
-      </div>
-    }
+  <!-- Переключатель между треком и альбомом -->
+  <div class="radio-group">
+    <label>
+      <input type="radio" name="contentType" [(ngModel)]="selectedContentType" value="track" />
+      Добавить трек
+    </label>
+    <label>
+      <input type="radio" name="contentType" [(ngModel)]="selectedContentType" value="album" />
+      Добавить альбом
+    </label>
   </div>
+  @if (selectedContentType === 'track') {
+    <form [formGroup]="trackForm" (ngSubmit)="addTrack()" class="form">
+      <h3>Добавить трек</h3>
+      <div class="form-field">
+        <label>Название:</label>
+        <input formControlName="title" required />
+      </div>
+      <div class="form-field">
+        <label>Жанр:</label>
+        <select formControlName="genreTrack">
+          @for (genre of genres; track $index) {
+            <option [value]="genre">{{ genre }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Аудиофайл:</label>
+        <input type="file" (change)="onFileSelected($event)" accept="audio/*" />
+      </div>
+      <button type="submit" class="submit-btn">Сохранить трек</button>
+    </form>
+  }
+  <!-- Форма для альбома -->
+  @if (selectedContentType === 'album') {
+    <form [formGroup]="albumForm" (ngSubmit)="addAlbum()" class="form">
+      <h3>Добавить альбом</h3>
+      <div class="form-field">
+        <label>Название альбома:</label>
+        <input formControlName="Name" required /> <!-- Переименовано из albumName -->
+      </div>
+      <div class="form-field">
+        <label>Дата выпуска:</label>
+        <input type="date" formControlName="releaseDate" required />
+      </div>
+
+      <!-- Список треков -->
+      <div formArrayName="tracks" class="tracks-container">
+        @for (track of tracksFormArray.controls; track $index) {
+          <div [formGroupName]="$index" class="track-item">
+            <h5>Трек {{ $index + 1 }}</h5>
+            <div class="form-field">
+              <label>Название:</label>
+              <input formControlName="title" required />
+            </div>
+            <div class="form-field">
+              <label>Жанр:</label>
+              <select formControlName="genre_track">
+                @for (genre of genres; track $index) {
+                  <option [value]="genre">{{ genre }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Длительность:</label>
+              <input formControlName="duration" required placeholder="HH:mm:ss" />
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" (click)="addTrackField()" class="add-track-btn">+ Добавить трек</button>
+      <button type="submit" class="submit-btn">Сохранить альбом</button>
+    </form>
+  }
 </div>

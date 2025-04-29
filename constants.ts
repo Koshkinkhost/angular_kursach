@@ -19,7 +19,8 @@ export const API_URLS = {
     UPDATE_TRACK:"http://localhost:8082/api/v2/Track/UpdateTrack",
     GET_ALL_ROYALTY:"http://localhost:8082/api/v2/Royalti/GetTotalMoney",
     MONEY_BY_TRACK:"http://localhost:8082/api/v2/Royalti/GetTracksRoyalti",
-    ADD_TRACK:"http://localhost:8082/api/v2/Track/AddTrack",
+    ADD_TRACK:"http://localhost:8082/api/v2/Track/UploadTrack",
+    ADD_ALBUM_WITH_TRACKS:"http://localhost:8082/api/v2/Album/AddAlbum",
 
    
   };

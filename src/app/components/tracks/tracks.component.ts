@@ -1,75 +1,119 @@
-import { Component, Input } from '@angular/core';
-import { LastFmService } from '../../last-fm.service';
-import {ReactiveFormsModule,FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProviderService } from '../account/provider.service';
-import { RegistrationService } from '../../registration/RegistrationService';
-import { Router } from '@angular/router';
-import { TracksService } from '../top-tracks-main/tracks.service';
-import { Track } from '../top-tracks-main/TopTrack';
-import { EditTracks } from '../../all-tracks/EditTracks';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators, FormsModule } from '@angular/forms';
+import { TracksService } from '../top-tracks-main/tracks.service'; // Импортируем сервис
+import { EditTracks } from '../../all-tracks/EditTracks'; // Импортируем интерфейс
+import {ReactiveFormsModule} from '@angular/forms'; // Импортируем модуль для работы с формами
 @Component({
   selector: 'app-tracks',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
-  providers:[LastFmService],
+  imports: [FormsModule,ReactiveFormsModule], // Импортируем модуль для работы с формами
+  providers: [],
   templateUrl: './tracks.component.html',
-  styleUrl: './tracks.component.css'
+  styleUrls: ['./tracks.component.css']
 })
 export class TracksComponent {
-  mapToTrack(data: any): Track {
-    return {
-      id:Number(data.trackId),
-      title: data.title,
-      trackArtist: data.track_Artist,
-      genreTrack: data.genre_track,
-      listenersCount: Number(data.listeners_count)
-    };
-  }
-  
-  yt_results:string[]=[];
-  tracks:EditTracks[]=[];
+  selectedContentType: 'track' | 'album' = 'track'; // Тип добавляемого контента
   trackForm: FormGroup;
-  genres: string[] = ['Pop', 'Rock', 'Hip-Hop','Blues','Classical','Electronic'  ];  
-  constructor(private last:LastFmService,private registr:RegistrationService,private router:Router,private tracksService:TracksService,private fb: FormBuilder){
-  this.trackForm= this.fb.group({
-    title: ['', Validators.required],
-    genre_track: ['', Validators.required], 
-    listenersCount: [0, [Validators.required, Validators.min(0)]],
-  });
-}
-async ngOnInit(){
-  this.tracksService.tracks$.subscribe((tracks: EditTracks[]) => {
-    this.tracks = tracks; // Обновляем локальное состояние
-  });
-  const isAuthenticated =  this.registr.GetAuthState();
-  // const role_check=await this.registr.Check_Roles();
-  // console.log(role_check);//проверка РОЛИ
+  albumForm: FormGroup;
+  genres: string[] = ['Pop', 'Rock', 'Hip-Hop', 'Blues', 'Classical', 'Electronic'];
+  selectedFile: File | null = null; // Переменная для хранения выбранного файла
 
-  const storage_name=localStorage.getItem('username');
-  if (isAuthenticated && storage_name) {
-   
-    const data=await this.tracksService.GetArtistTracks(Number(this.tracksService.selected_artist.id));
-this.tracks=data.tracks.map(this.mapToTrack);
-  console.log(data);
-  
+  constructor(private fb: FormBuilder, private tracksService: TracksService) {
+    // Форма для добавления трека
+    this.trackForm = this.fb.group({
+      title: ['', Validators.required],
+      genreTrack: ['', Validators.required], // Переименовано из genre_track
+    });
 
-
-    // Вы можете также получить данные пользователя, например:
-     // Подгрузите реальное имя с сервера, если требуется
-  } else {
-      this.router.navigate(['/login']);
+    // Форма для добавления альбома
+    this.albumForm = this.fb.group({
+      Name: ['', Validators.required], // Название альбома
+      releaseDate: ['', Validators.required], // Дата выпуска
+      tracks: this.fb.array([]), // Массив для треков
+    });
   }
 
- 
-  
- 
+  // Получаем массив треков из формы альбома
+  get tracksFormArray() {
+    return this.albumForm.get('tracks') as FormArray;
+  }
 
-}
-async addTrack(){
-const new_track:EditTracks={ArtistId:Number(this.tracksService.selected_artist.id),title:this.trackForm.get('title')?.value,trackArtist:this.tracksService.selected_artist.name, genreTrack:this.trackForm.get('genre_track')?.value, listenersCount:0,AlbumId:null};
-const result = await this.tracksService.AddTrack(new_track);
-console.log(result);
-}
+  // Метод для обработки выбора файла
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0]; // Сохраняем выбранный файл
+      console.log('Выбранный файл:', this.selectedFile);
+    }
+  }
 
-}
+  // Добавляем новое поле для трека
+  addTrackField() {
+    const trackGroup = this.fb.group({
+      title: ['', Validators.required],
+      genreTrack: ['', Validators.required], // Переименовано из genre_track
+    });
+    this.tracksFormArray.push(trackGroup);
+  }
 
+  // Метод для добавления трека
+  async addTrack() {
+    console.log(this.trackForm.value);
+    if (this.trackForm.invalid || !this.selectedFile) {
+      alert('Пожалуйста, заполните все поля и выберите аудиофайл.');
+      return;
+    }
+
+    // Создаем объект, соответствующий интерфейсу EditTracks
+    const newTrack: EditTracks = {
+      ArtistId: Number(this.tracksService.selected_artist.id), // ID артиста
+      trackId: null, // ID трека (неизвестен при создании)
+      title: this.trackForm.value.title, // Название трека
+      trackArtist: this.tracksService.selected_artist.name, // Имя артиста
+      genreTrack: this.trackForm.value.genreTrack, // Жанр трека
+      AlbumId: null, // ID альбома (неизвестен при создании)
+      listenersCount: 0, // По умолчанию 0 прослушиваний
+      isEditing: false, // Флаг редактирования (по умолчанию false)
+    };
+
+    try {
+      // Вызываем метод сервиса для добавления трека с файлом
+      const result = await this.tracksService.AddTrack(newTrack, this.selectedFile);
+      console.log('Трек успешно добавлен:', result);
+      alert('Трек успешно добавлен!');
+    } catch (error) {
+      console.error('Ошибка при добавлении трека:', error);
+      alert('Произошла ошибка при добавлении трека.');
+    }
+  }
+
+  // Метод для добавления альбома
+  async addAlbum() {
+    if (this.albumForm.invalid) {
+      alert('Пожалуйста, заполните все поля.');
+      return;
+    }
+
+    // Создаем данные альбома
+    const albumData = {
+      ArtistId: Number(this.tracksService.selected_artist.id),
+      Name: this.albumForm.value.Name, // Название альбома
+      releaseDate: this.albumForm.value.releaseDate, // Дата выпуска
+      tracks: this.albumForm.value.tracks.map((track: any) => ({
+        ArtistId: Number(this.tracksService.selected_artist.id),
+        title: track.title, // Название трека
+        Genre_track: track.genreTrack, // Жанр трека
+        Listeners_count: 0, // По умолчанию 0 прослушиваний
+      })),
+    };
+
+    try {
+      const result = await this.tracksService.AddAlbumWithTracks(albumData);
+      console.log('Альбом успешно добавлен:', result);
+      alert('Альбом успешно добавлен!');
+    } catch (error) {
+      console.error('Ошибка при добавлении альбома:', error);
+      alert('Произошла ошибка при добавлении альбома.');
+    }
+  }
+}

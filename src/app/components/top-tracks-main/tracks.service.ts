@@ -145,7 +145,7 @@ export class TracksService {
       trackId: track.trackId,
       title: track.title,
       trackArtist: track.trackArtist,
-      GenreName: track.genreTrack,
+      Genre_track: track.genreTrack,
       listenersCount: track.listenersCount,
       AlbumId:track.AlbumId
     };
@@ -167,32 +167,47 @@ export class TracksService {
     this.tracksSubject.next(updatedTracks); // Обновляем данные в BehaviorSubject
     return updatedTracks;
   }
-  async AddTrack(track: EditTracks): Promise<EditTracks[]> {
-    const updatedTrack = {
-      ArtistId:track.ArtistId,
-      trackId: track.trackId,
-      title: track.title,
-      trackArtist: track.trackArtist,
-      Genre_track: track.genreTrack,
-      listenersCount: track.listenersCount,
-      AlbumId:track.AlbumId
-    };
+  
+  // Метод для добавления трека с файлом
+  async AddTrack(trackData: EditTracks, file: File): Promise<any> {
+    // Создаем объект FormData
+    const formData = new FormData();
+    formData.append('trackData', JSON.stringify(trackData)); // Добавляем метаданные трека
+    formData.append('audioFile', file); // Добавляем файл
 
-    const response = await fetch(`${API_URLS.ADD_TRACK}`, {
+    try {
+      // Отправляем запрос на сервер через fetch
+      const response = await fetch(`${API_URLS.ADD_TRACK}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка при загрузке трека: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      return result; // Возвращаем результат от сервера
+    } catch (error) {
+      console.error('Ошибка при загрузке трека:', error);
+      throw error; // Передаем ошибку выше
+    }
+  }
+
+  async AddAlbumWithTracks(albumData: any): Promise<any> {
+    const response = await fetch(`${API_URLS.ADD_ALBUM_WITH_TRACKS}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedTrack),
+      body: JSON.stringify(albumData),
     });
 
     if (!response.ok) {
-      throw new Error('Ошибка при обновлении трека');
+      throw new Error('Ошибка при добавлении альбома');
     }
 
-    const updatedTracks = await response.json();
-    this.tracksSubject.next(updatedTracks); // Обновляем данные в BehaviorSubject
-    return updatedTracks;
+    return await response.json();
   }
 }
