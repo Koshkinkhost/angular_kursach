@@ -7,4 +7,6 @@ export interface EditTracks {
     AlbumId:number|null,
     listenersCount: number;
     isEditing?: boolean; // <-- Добавили
+    audioUrl?: string | null; // URL аудиофайла (если есть)
+    FileBase64?: string | null; // Bas
   }

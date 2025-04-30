@@ -5,7 +5,7 @@ import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { RegistrationService } from '../registration/RegistrationService';
 import { EditTracks } from './EditTracks';
-
+import { API_URLS } from '../../../constants';
 @Component({
   selector: 'app-all-tracks',
   standalone: true,
@@ -21,9 +21,11 @@ export class AllTracksComponent implements OnInit {
   IsEditing: boolean = false;
   tracks: EditTracks[] = [];
   find_tracks: EditTracks[] = [];
-
+base_url:string="http://localhost:8082/api/v2";
   constructor(private trackService: TracksService, private registr: RegistrationService) {}
-
+  isBase64(str: string): boolean {
+    return /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/.test(str);
+  }
   mapToTrack(data: any): EditTracks {
     return {
       trackId: Number(data.trackId),
@@ -32,10 +34,12 @@ export class AllTracksComponent implements OnInit {
       genreTrack: data.genre_track,
       listenersCount: Number(data.listeners_count),
       isEditing: false,
-      AlbumId:data.AlbumId,
+      AlbumId: data.albumId,
+      audioUrl: data.url,
+      FileBase64: data.fileBase64,
     };
   }
-
+  
   async reset() {
     this.searchControl.setValue('');
     if (this.searchControl.value == '') {

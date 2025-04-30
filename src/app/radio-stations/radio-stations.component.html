@@ -1,1 +1,47 @@
 <p>radio-stations works!</p>
+<!-- src/app/components/radio-stations/radio-stations.component.html -->
+<div class="container">
+    <h2>Радиостанции</h2>
+  
+    <!-- Форма добавления радиостанции -->
+    <form (ngSubmit)="addRadioStation()" class="form">
+      <h3>Добавить новую радиостанцию</h3>
+      <div class="form-field">
+        <label for="name">Название:</label>
+        <input id="name" formControlName="name" required />
+      </div>
+      <div class="form-field">
+        <label for="frequency">Частота (МГц):</label>
+        <input id="frequency" formControlName="frequency" required />
+      </div>
+      <div class="form-field">
+        <label for="country">Страна:</label>
+        <input id="country" formControlName="country" required />
+      </div>
+      <div class="form-field">
+        <label for="contactInfo">Контакты:</label>
+        <input id="contactInfo" formControlName="contactInfo" />
+      </div>
+      <button type="submit" class="submit-btn">Добавить</button>
+    </form>
+  
+    <!-- Список радиостанций -->
+    <!-- <div class="stations-list">
+      <h3>Список радиостанций</h3>
+      @if (radioStations.length > 0) {
+        <ul>
+          @for (station of radioStations; track station.id) {
+            <li class="station-item">
+              <span class="station-name">{{ station.name }}</span>
+              <span class="station-frequency">{{ station.frequency }} МГц</span>
+              <span class="station-country">{{ station.country }}</span>
+              <span class="station-contact">{{ station.contactInfo }}</span>
+              <button class="delete-btn" (click)="(station.id!)">Удалить</button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p>Список радиостанций пуст.</p>
+      }
+    </div> -->
+  </div>

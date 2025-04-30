@@ -7,7 +7,7 @@
   }
   
   .track-card {
-    width: 260px;
+    width: 360px;
     height: 380px;
     background-color: #222;
     border-radius: 16px;
@@ -87,6 +87,10 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    
+  }
+  audio{
+    width:100%;
   }
   
   .search-input {
