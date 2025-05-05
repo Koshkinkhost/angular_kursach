@@ -18,7 +18,6 @@
             <h3 class="track-title">{{ t.title }}</h3>
             <p class="track-artist">👤{{ t.trackArtist }}</p>
             <p class="track-genre">🎵{{ t.genreTrack }}</p>
-            <h2>{{this.base_url+t.audioUrl}}</h2>
             <audio controls>
               @if (t.audioUrl) {
                 <source 

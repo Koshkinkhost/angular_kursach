@@ -25,23 +25,22 @@
       <button type="submit" class="submit-btn">Добавить</button>
     </form>
   
-    <!-- Список радиостанций -->
-    <!-- <div class="stations-list">
-      <h3>Список радиостанций</h3>
-      @if (radioStations.length > 0) {
-        <ul>
-          @for (station of radioStations; track station.id) {
-            <li class="station-item">
-              <span class="station-name">{{ station.name }}</span>
-              <span class="station-frequency">{{ station.frequency }} МГц</span>
-              <span class="station-country">{{ station.country }}</span>
-              <span class="station-contact">{{ station.contactInfo }}</span>
-              <button class="delete-btn" (click)="(station.id!)">Удалить</button>
-            </li>
-          }
-        </ul>
-      } @else {
-        <p>Список радиостанций пуст.</p>
-      }
-    </div> -->
+   
+   
+  </div>
+  <div class="stations-list">
+    <h3>Список радиостанций</h3>
+   
+      <ul>
+        @for (station of radioSt; track $index) {
+          <li class="station-item">
+            <span class="station-name">{{ station.name }}</span>
+            <span class="station-frequency">{{ station.frequency }} МГц</span>
+            <span class="station-country">{{ station.country }}</span>
+            <span class="station-contact">{{ station.contactInfo }}</span>
+            <button >Подать заявку на ротацию</button>
+          </li>
+        }
+      </ul>
+    
   </div>

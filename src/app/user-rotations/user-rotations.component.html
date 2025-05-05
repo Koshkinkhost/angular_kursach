@@ -1,0 +1,29 @@
+<p class="text-center" style="font-size: 1.5em; color: #a6cff8; margin-bottom: 30px;">
+    Заявки на ротацию
+  </p>
+  
+  @for (rotation of rotations; track $index) {
+    <div class="rotation-item">
+      <h3>
+        {{ rotation.trackTitle }} - {{ rotation.artistName }}
+        <span
+          class="status-badge"
+          [class.pending]="rotation.status === 'pending'"
+          [class.approved]="rotation.status === 'approved'"
+          [class.rejected]="rotation.status === 'rejected'"
+        >
+          {{ rotation.status }}
+        </span>
+      </h3>
+      <p><strong>Radio Station:</strong> {{ rotation.radioStationName }}</p>
+      <p><strong>Status:</strong> {{ rotation.status }}</p>
+      <p><strong>Application Date:</strong> {{ rotation.applicationDate  }}</p>
+      @if (rotation.reviewDate) {
+        <p><strong>Review Date:</strong> {{ rotation.reviewDate }}</p>
+      }
+      @if (rotation.notes) {
+        <p><strong>Notes:</strong> {{ rotation.notes }}</p>
+      }
+      <hr />
+    </div>
+  }

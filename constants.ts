@@ -21,7 +21,8 @@ export const API_URLS = {
     MONEY_BY_TRACK:"http://localhost:8082/api/v2/Royalti/GetTracksRoyalti",
     ADD_TRACK:"http://localhost:8082/api/v2/Track/UploadTrack",
     ADD_ALBUM_WITH_TRACKS:"http://localhost:8082/api/v2/Album/AddAlbum",
-
+    RADIOS:"http://localhost:8082/api/v2/Radio/GetAllRadioStations",
+    ROTATION_APPLICATIONS:"http://localhost:8082/api/v2/Artist/GetRotations"
    
   };
   

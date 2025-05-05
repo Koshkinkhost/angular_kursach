@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { RadioStationsService } from './radio-stations.service';
+import { RadioStation } from './RadioStation';
 
 @Component({
   selector: 'app-radio-stations',
@@ -8,12 +10,18 @@ import { Component } from '@angular/core';
   styleUrl: './radio-stations.component.css'
 })
 export class RadioStationsComponent {
-
+  radioSt?:RadioStation[]=[];
+  constructor(private radio:RadioStationsService){}
+async ngOnInit(){
+  this.radio.radioStation$.subscribe((tracks: RadioStation[]|null) => {
+    this.radioSt = tracks ?? []// Обновляем локальное состояние
+  });
+  console.log("Радиостанции",this.radioSt);
+  const result=await this.radio.GetAllRadioStations();
+  console.log(result);
+}
 
   addRadioStation(): void {
-    if (this.form.invalid) {
-      alert('Пожалуйста, заполните все обязательные поля.');
-      return;
-    }
+    
 }
 }

@@ -19,6 +19,8 @@ import { SystemModule } from './system/system.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AllTracksComponent } from './all-tracks/all-tracks.component';
 import { RoyaltiArtistComponent } from './royalti-artist/royalti-artist.component';
+import { RadioStationsComponent } from './radio-stations/radio-stations.component';
+import { UserRotationsComponent } from './user-rotations/user-rotations.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -31,6 +33,7 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'ArtisTracks', component: TracksComponent },
+  { path: 'Radios', component: RadioStationsComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
@@ -44,6 +47,8 @@ export const routes: Routes = [
       { path: 'bio', component: ArtistBioComponent },
       { path: 'similar', component: SimilarArtistsComponent },
       { path: 'royalti', component: RoyaltiArtistComponent },
+      { path: 'rotations', component: UserRotationsComponent },
+
       
 
 
