@@ -79,7 +79,7 @@
         <p class="album-artist">👤{{ album.artistName }}</p>
         <p class="album-genre">🎵{{ album.genre }}</p>
         <p class="album-publisher">📚 {{ album.totalPlays }}</p>
-      </div>
+        <a [routerLink]="['/album_tracks', album.albumId] " >Смотреть</a>      </div>
     </div>
     
   }

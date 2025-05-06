@@ -13,14 +13,17 @@ import { TracksComponent } from './components/tracks/tracks.component';
 import {AnalyticsComponent} from './components/analytics/analytics.component'
 import { InSystemComponent } from './in-system/in-system.component';
 import { Component } from '@angular/core';
-import { authGuard } from './auth.guard'; 
-import { SimilarArtistsComponent } from './similar-artists/similar-artists.component';
-import { SystemModule } from './system/system.module';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+
+import { authGuard } from './auth.guard';
 import { AllTracksComponent } from './all-tracks/all-tracks.component';
 import { RoyaltiArtistComponent } from './royalti-artist/royalti-artist.component';
 import { RadioStationsComponent } from './radio-stations/radio-stations.component';
 import { UserRotationsComponent } from './user-rotations/user-rotations.component';
+import { SystemModule } from './system/system.module';
+import { SimilarArtistsComponent } from './similar-artists/similar-artists.component';
+import { AlbumTracksComponent } from './album-artists/album-tracks.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminArtistComponent } from './admin-artist/admin-artist.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -37,8 +40,17 @@ export const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
-  {path:'adminka',component:AdminPanelComponent},
   {path:'Tracks',component:AllTracksComponent},
+  {
+    path: 'adminka',
+    component: AdminPanelComponent,
+    children: [
+      { path: 'artists', component: AdminArtistComponent },
+      
+    ]
+  },
+  
+  {path:'album_tracks/:albumId',component:AlbumTracksComponent},
   {
     path: 'system',
     component: InSystemComponent,
@@ -53,5 +65,6 @@ export const routes: Routes = [
 
 
     ]
-  }
+  },
+ 
 ];

@@ -30,7 +30,7 @@ const data=await money.json();
 }
 async logout() {
   console.log("нажал");
-
+localStorage.clear();
   await this.registr.LogOut(); // только очистка и запрос
 console.log("РОЛЬ",this.registr.GetCurrentRole());
   const result = await this.registr.CheckAuthentication(); // тут точно вызовется

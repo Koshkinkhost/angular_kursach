@@ -1,0 +1,19 @@
+<div class="artists-list">
+    @for (artist of artists; track $index) {
+      <div class="artist-card">
+        <h2>{{ artist.artistName }}</h2>
+        <p><strong>Доход:</strong> {{ artist.totalIncome | currency: 'USD':'symbol':'1.2-2' }}</p>
+        
+        <button class="edit-btn" (click)="toggleInput(artist)">Изменить роялти</button>
+        @if(artist.showInput){
+
+        
+        <div class="royalty-edit">
+            <input #royaltyInput type="number" placeholder="Введите сумму" />
+            <button (click)="updateRoyalty(artist, royaltyInput.value)">Сохранить</button>
+        </div>
+    }
+      </div>
+    }
+  </div>
+  

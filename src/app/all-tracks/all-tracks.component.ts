@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Track } from '../components/top-tracks-main/TopTrack';
 import { TracksService } from '../components/top-tracks-main/tracks.service';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
@@ -7,11 +8,12 @@ import { RegistrationService } from '../registration/RegistrationService';
 import { EditTracks } from './EditTracks';
 import { API_URLS } from '../../../constants';
 import { AlbumInfo } from './Albuminfo';
+import { AlbumTracksComponent } from '../album-artists/album-tracks.component';
 @Component({
   selector: 'app-all-tracks',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './all-tracks.component.html',
+  imports: [ReactiveFormsModule, FormsModule,RouterLink],
+templateUrl: './all-tracks.component.html',
   styleUrls: ['./all-tracks.component.css']
 })
 export class AllTracksComponent implements OnInit {
