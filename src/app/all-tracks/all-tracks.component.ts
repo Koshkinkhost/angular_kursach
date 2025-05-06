@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { RegistrationService } from '../registration/RegistrationService';
 import { EditTracks } from './EditTracks';
 import { API_URLS } from '../../../constants';
+import { AlbumInfo } from './Albuminfo';
 @Component({
   selector: 'app-all-tracks',
   standalone: true,
@@ -18,6 +19,10 @@ export class AllTracksComponent implements OnInit {
 
   searchControl = new FormControl('');
   IsAdmin: boolean = false;
+  mode:string='tracks';
+  albums: AlbumInfo[] = [];
+  lastPlayedTrackId: number | null = null;
+
   IsEditing: boolean = false;
   tracks: EditTracks[] = [];
   find_tracks: EditTracks[] = [];
@@ -39,7 +44,24 @@ base_url:string="http://localhost:8082/api/v2";
       FileBase64: data.fileBase64,
     };
   }
-  
+
+async onPlay(track: any) {
+  if (this.lastPlayedTrackId === track.id) return;
+
+  this.lastPlayedTrackId = track.id;
+  track.listenersCount++;
+
+  try {
+    await this.trackService.IncrementPlays(track.id);
+  } catch (err) {
+    console.error('Ошибка при увеличении прослушиваний');
+  }
+
+  setTimeout(() => {
+    this.lastPlayedTrackId = null;
+  }, 5000);
+}
+
   async reset() {
     this.searchControl.setValue('');
     if (this.searchControl.value == '') {
@@ -48,6 +70,20 @@ base_url:string="http://localhost:8082/api/v2";
       console.log(this.tracks);
     }
   }
+  async  onModeChange(newMode: string) {
+    this.mode = newMode;
+    if (newMode === 'tracks') {
+      this.reset();
+      const result = await this.trackService.getAllTracks();
+    this.tracks = result.map(this.mapToTrack);
+    console.log(this.tracks);
+    } else if (newMode === 'albums') {
+      const result = await this.trackService.getAllAlbums();
+    this.albums = result;
+    console.log(this.albums); //
+    }
+  }
+ 
 
   async find_tracksByTitle() {
     console.log(this.searchControl.value);

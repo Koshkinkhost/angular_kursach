@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Artist } from '../Artist';
 import { EditTracks } from '../../all-tracks/EditTracks';
 import { FormGroup } from '@angular/forms';
-
+import { AlbumInfo } from '../../all-tracks/Albuminfo';
 @Injectable({
   providedIn: 'root'
 })
@@ -232,4 +232,29 @@ export class TracksService {
 
     return await response.json();
   }
+  async getAllAlbums(): Promise<AlbumInfo[]> {
+    const response = await fetch(`${API_URLS.ALL_ALBUMS}`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при получении альбомов');
+    }
+
+    const albums = await response.json();
+console.log(albums);
+    // Преобразуем данные в нужный формат
+    return albums.map((album: any) => ({
+      albumId: album.albumId,
+      artistId: album.ArtistId,
+      artistName: album.artistName,  // Проверка на наличие объекта Artist
+      genre: album.genre_name,  // Предполагаем, что жанр есть в объекте альбома
+      title: album.album_title,      // Заголовок альбома
+      totalPlays:album.totalPlays
+    }));
+    
+}
+
+
 }

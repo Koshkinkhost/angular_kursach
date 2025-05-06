@@ -18,6 +18,7 @@
     transition: transform 0.2s ease, box-shadow 0.3s ease;
   }
   
+  
   .track-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 18px rgba(255, 0, 140, 0.2);
@@ -155,4 +156,195 @@
   .input-button:focus {
     outline: none;
   }
-  
+  /* Контейнер для альбомов */
+.albums-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 30px 10px;
+}
+
+/* Карточка альбома */
+.album-card {
+  width: 320px; /* Уменьшена ширина для компактности */
+  height: 420px; /* Немного увеличена высота для лучшего баланса */
+  background-color: #222;
+  border-radius: 12px; /* Скругленные углы */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* Чтобы padding не влиял на размеры */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Легкая тень */
+  overflow: hidden;
+}
+
+/* Эффект при наведении на карточку альбома */
+.album-card:hover {
+  transform: translateY(-6px); /* Легкое поднятие карточки */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+}
+
+/* Обложка альбома */
+.album-cover {
+  width: 100%;
+  height: 180px; /* Увеличена высота обложки */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Легкий эффект при наведении на изображение */
+.album-cover:hover img {
+  transform: scale(1.05); /* Немного увеличиваем изображение */
+}
+
+/* Информация об альбоме */
+.album-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+/* Название альбома */
+.album-title {
+  font-size: 20px; /* Увеличен размер для акцента */
+  font-weight: 700; /* Жирный шрифт */
+  margin-bottom: 10px; /* Отступ снизу */
+  color: #fff; /* Белый цвет */
+  text-overflow: ellipsis; /* Если название длинное, оно обрежется */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Стиль для информации об альбоме */
+.album-artist,
+.album-genre,
+.album-release-date,
+.album-publisher {
+  font-size: 14px;
+  color: #bbb; /* Более светлый цвет для текста */
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Если текст длинный, он обрежется */
+}
+
+/* Кнопки действия в карточке альбома */
+.album-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Эффект при наведении на кнопку */
+.album-button:hover {
+  background-color: #0056b3;
+}
+
+.album-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Контейнер для обложек альбомов */
+.album-card img {
+  border-radius: 8px;
+}
+
+/* Стиль для контейнера с select */
+.select-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Стиль для самого select */
+select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #2b2b2b;
+  color: #fff;
+  appearance: none; /* Убирает стандартное оформление браузера */
+  outline: none;
+  width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Эффект при наведении и фокусе на select */
+select:hover,
+select:focus {
+  border-color: #4CAF50; /* Цвет рамки при фокусе */
+  background-color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+
+/* Стиль для стрелки */
+select::-ms-expand {
+  display: none;
+}
+
+select::after {
+  content: ' ▼';
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Стиль для выпадающего списка */
+option {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Эффект при наведении на опцию */
+option:hover {
+  background-color: #4CAF50;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+  select {
+    width: 100%; /* Растягиваем select на всю ширину на мобильных устройствах */
+  }
+}
+
+
+/* Для адаптивности на мобильных устройствах */
+@media (max-width: 768px) {
+  .albums-container {
+    padding: 20px;
+    gap: 16px;
+  }
+  .album-card {
+    width: 280px; /* Сужаем карточки для маленьких экранов */
+    height: 400px;
+  }
+  .album-cover {
+    height: 160px; /* Уменьшаем высоту обложки */
+  }
+}
