@@ -1,46 +1,39 @@
-<p>radio-stations works!</p>
-<!-- src/app/components/radio-stations/radio-stations.component.html -->
 <div class="container">
-    <h2>Радиостанции</h2>
-  
-    <!-- Форма добавления радиостанции -->
-    <form (ngSubmit)="addRadioStation()" class="form">
-      <h3>Добавить новую радиостанцию</h3>
-      <div class="form-field">
-        <label for="name">Название:</label>
-        <input id="name" formControlName="name" required />
-      </div>
-      <div class="form-field">
-        <label for="frequency">Частота (МГц):</label>
-        <input id="frequency" formControlName="frequency" required />
-      </div>
-      <div class="form-field">
-        <label for="country">Страна:</label>
-        <input id="country" formControlName="country" required />
-      </div>
-      <div class="form-field">
-        <label for="contactInfo">Контакты:</label>
-        <input id="contactInfo" formControlName="contactInfo" />
-      </div>
-      <button type="submit" class="submit-btn">Добавить</button>
-    </form>
-  
-   
-   
-  </div>
+  <h2>Радиостанции</h2>
+
   <div class="stations-list">
-    <h3>Список радиостанций</h3>
-   
+      <h3 style="color:white">Список радиостанций</h3>
       <ul>
-        @for (station of radioSt; track $index) {
-          <li class="station-item">
-            <span class="station-name">{{ station.name }}</span>
-            <span class="station-frequency">{{ station.frequency }} МГц</span>
-            <span class="station-country">{{ station.country }}</span>
-            <span class="station-contact">{{ station.contactInfo }}</span>
-            <button >Подать заявку на ротацию</button>
-          </li>
-        }
+          @for (station of radioSt; track $index) {
+              <li class="station-item">
+                  <span class="station-name">{{ station.name }}</span>
+                  <span class="station-frequency">{{ station.frequency }} МГц</span>
+                  <span class="station-country">{{ station.country }}</span>
+                  <span class="station-contact">{{ station.contactInfo }}</span>
+                  <button (click)="toggleTracks(station.radioStationId)">
+                      {{ isTracksVisible[station.radioStationId] ? 'Скрыть треки' : 'Показать треки' }}
+                  </button>
+
+                  <!-- Показываем треки, если они видимы -->
+                  @if (isTracksVisible[station.radioStationId]) {
+                      @for (tr of tracks; track $index) {
+                          <div class="track-list">
+                           
+                              <span>{{ tr.title }} Жанр {{ tr.genreTrack }}</span>
+                              <input
+                                  name="comment"
+                                  [(ngModel)]="trackComments[station.radioStationId + '-' + tr.trackId!]"
+                                  type="text"
+                                  placeholder="Комментарий"
+                              />
+                              <button (click)="sendRotationRequest(tr.trackId!, station.radioStationId, trackComments[station.radioStationId + '-' + tr.trackId!])">
+                                  Подать
+                              </button>
+                          </div>
+                      }
+                  }
+              </li>
+          }
       </ul>
-    
   </div>
+</div>

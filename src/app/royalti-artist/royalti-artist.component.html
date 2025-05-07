@@ -1,11 +1,20 @@
-<h2>Прибыль по трекам артиста</h2>
+<h2 style="text-align: center; color: #efe7e7; font-family: Arial, sans-serif;">Прибыль по трекам артиста</h2>
 
-<ul>
-  @for (trackName of earningsArray ; track $index) {
-    <li>
-      <strong>{{ trackName.title }}||{{trackName.total}}</strong>
-    </li>
-  }
-</ul>
+<div style="max-width: 600px; margin: 0 auto;">
+  <ul style="list-style: none; padding: 0;">
+    @for (trackName of earningsArray ; track $index) {
+      <li style="background: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; padding: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="color: #555; font-size: 18px;">{{ trackName.title }}</strong>
+          <span style="color: #E91E63; font-size: 20px; font-weight: bold;">${{trackName.total}}</span>
+        </div>
+      </li>
+    }
+  </ul>
+</div>
 
-
+<style>
+body {
+  background-color: #fafafa;
+}
+</style>

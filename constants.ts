@@ -24,6 +24,8 @@ export const API_URLS = {
     RADIOS:"http://localhost:8082/api/v2/Radio/GetAllRadioStations",
     ROTATION_APPLICATIONS:"http://localhost:8082/api/v2/Artist/GetRotations",
     ALL_ALBUMS:"http://localhost:8082/api/v2/Album/GetAllAlbums",
-    GET_ALL_ROYALTY_ARTIST:"http://localhost:8082/api/v2/Admin/GetAllArtistsIncome"
+    GET_ALL_ROYALTY_ARTIST:"http://localhost:8082/api/v2/Admin/GetAllArtistsIncome",
+    ADD_ROTATION:"http://localhost:8082/api/v2/Radio/AddRotation",
+    ALL_ROTATIONS:"http://localhost:8082/api/v2/Radio/GetAllRotations"
   };
   

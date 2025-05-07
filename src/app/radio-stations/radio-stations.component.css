@@ -1,84 +1,94 @@
-/* src/app/components/radio-stations/radio-stations.component.css */
+/* Стиль для контейнера */
 .container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Стиль для списка станций */
+.stations-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Стиль для каждого элемента станции */
+.station-item {
+  position: relative; /* Нужно для позиционирования выпадающего списка */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.station-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.station-name {
+  font-weight: bold;
+  color:black;
+}
+
+.station-frequency,
+.station-country,
+.station-contact {
+  margin-left: 10px;
+  color: #555;
+}
+
+/* Кнопка "Подать заявку на ротацию" */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 20%;;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Выпадающий список треков */
+.track-dropdown {
+  position: absolute; /* Абсолютное позиционирование относительно station-item */
+  top: 100%; /* Размещаем под station-item */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Убедитесь, что выпадающий список выше других элементов */
+  display: none; /* По умолчанию скрыт */
+  color:black;
+}
+
+.track-dropdown.show {
+  display: block; /* Показываем выпадающий список */
+}
+
+/* Стиль для каждого трека в выпадающем списке */
+.track-list {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; /* Пример: первая и третья колонки уже, вторая шире */
+  gap: 20px;
+  align-items: center;
+  color: black;
+  margin-bottom: 10px;
+}
+input{
   
-  h2, h3 {
-    color: #333;
-  }
-  
-  .form {
-    margin-bottom: 20px;
-  }
-  
-  .form-field {
-    margin-bottom: 10px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .submit-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-btn:hover {
-    background-color: #218838;
-  }
-  
-  .stations-list ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .station-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-  
-  .station-name {
-    font-weight: bold;
-  }
-  
-  .station-frequency, .station-country, .station-contact {
-    margin-left: 10px;
-    color: #666;
-  }
-  
-  .delete-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c82333;
-  }
+  height: 20px;
+}
+
+button {
+ 
+  margin-left: 50px; /* Отступ между текстом и кнопкой */
+}

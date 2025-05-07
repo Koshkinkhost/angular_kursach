@@ -1,12 +1,13 @@
 export interface RotationApplication {
     applicationId: number;
+    trackId: number;
+    radioStationId: number;
     trackTitle: string;
-    artistName: string;
+    artistName: string | null;
     radioStationName: string;
-    radioStationId?:number,
-    trackId?:number,
     status: string;
     applicationDate: string;
     reviewDate: string | null;
-    notes: string | null;
+    notes: string;
   }
+  

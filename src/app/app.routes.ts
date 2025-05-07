@@ -24,6 +24,7 @@ import { SimilarArtistsComponent } from './similar-artists/similar-artists.compo
 import { AlbumTracksComponent } from './album-artists/album-tracks.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AdminArtistComponent } from './admin-artist/admin-artist.component';
+import { AdminRotationsComponent } from './admin-rotations/admin-rotations.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -36,7 +37,6 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'ArtisTracks', component: TracksComponent },
-  { path: 'Radios', component: RadioStationsComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'artist-bio', component: ArtistBioComponent },
   { path: 'news', component: NewsComponent },
@@ -46,6 +46,7 @@ export const routes: Routes = [
     component: AdminPanelComponent,
     children: [
       { path: 'artists', component: AdminArtistComponent },
+{path:'rotations_admin',component:AdminRotationsComponent},
       
     ]
   },
@@ -60,6 +61,8 @@ export const routes: Routes = [
       { path: 'similar', component: SimilarArtistsComponent },
       { path: 'royalti', component: RoyaltiArtistComponent },
       { path: 'rotations', component: UserRotationsComponent },
+      { path: 'radios', component: RadioStationsComponent },
+
 
       
 
