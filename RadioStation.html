@@ -2,41 +2,136 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Радиостанция Rock FM</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .track { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
-    button { padding: 5px 10px; }
+    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    header { background-color: #282828; color: white; padding: 20px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+
+    .track-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .track {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .track:hover {
+      transform: translateY(-5px);
+    }
+
+    .track h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    .track p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .loader {
+      text-align: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>Радиостанция «Волна FM»</h1>
+  <header>
+    <h1>Радиостанция «Волна FM»</h1>
+  </header>
 
-  <div class="track">
-    <h3>Трек: Ветер свободы</h3>
-    <p>Исполнитель: Артист А</p>
-    <button onclick="listenTrack(1, 101)">▶️ Прослушать</button>
-  </div>
+  <div class="loader" id="loader" style="display: none;">Загружаем треки...</div>
 
-  <div class="track">
-    <h3>Трек: Город спит</h3>
-    <p>Исполнитель: Артист Б</p>
-    <button onclick="listenTrack(2, 101)">▶️ Прослушать</button>
+  <div class="track-list" id="track-list">
+    <!-- Сюда будут динамически добавляться треки -->
   </div>
 
   <script>
-    function listenTrack(trackId, radioStationId) {
-      fetch('https://example.com/api/radio/play-track', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ trackId, radioStationId })
-      }).then(res => {
-        if (res.ok) alert('Прослушивание учтено!');
-        else alert('Ошибка при отправке запроса');
-      });
-    }
+    // Функция для загрузки треков по радиостанции
+   // Функция для загрузки треков по радиостанции
+function fetchTracksByRadioStation(id) {
+  document.getElementById('loader').style.display = 'block'; // Показываем индикатор загрузки
+
+  fetch('http://localhost:8082/api/v2/Track/GetTracksByStation', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+   
+  })
+    .then(res => {
+      console.log('Ответ от сервера:', res);
+      if (!res.ok) {
+        throw new Error('Ошибка на сервере: ' + res.statusText);
+      }
+      return res.text(); // Читаем ответ как текст, чтобы проверить его
+    })
+    .then(data => {
+      console.log('Ответ от сервера:', data); // Логируем текст ответа
+      try {
+        const jsonData = JSON.parse(data); // Преобразуем текст в JSON
+        const trackList = document.getElementById('track-list');
+        trackList.innerHTML = ''; // Очищаем контейнер перед добавлением треков
+
+        // Добавляем каждый трек в DOM
+        jsonData.forEach(track => {
+          const trackElement = document.createElement('div');
+          trackElement.classList.add('track');
+          trackElement.innerHTML = `
+            <h3 class="track-title">${track.title}</h3>
+            <p class="track-artist">👤 ${track.track_Artist}</p>
+            <p class="track-genre">🎵 ${track.genreTrack}</p>
+            <audio controls id="audio-${track.trackId}" class="track-audio">
+              <source src="http://localhost:8082/api/v2${track.url}" type="audio/mp3">
+              Ваш браузер не поддерживает аудио.
+            </audio>
+            <p>Прослушано: ${track.listeners_count} раз</p>
+          `;
+          trackList.appendChild(trackElement);
+        });
+
+        document.getElementById('loader').style.display = 'none'; // Прячем индикатор загрузки
+      } catch (err) {
+        console.error('Ошибка парсинга JSON:', err);
+        document.getElementById('loader').style.display = 'none';
+        alert('Ошибка при загрузке данных: ' + err.message);
+      }
+    })
+    .catch(err => {
+      document.getElementById('loader').style.display = 'none';
+      alert('Ошибка при загрузке данных: ' + err.message);
+    });
+}
+
+
+    // Пример вызова метода для конкретной радиостанции
+    // Тут можно передать id радиостанции, например, для "Волна FM"
+    window.onload = function() {
+      fetchTracksByRadioStation(1); // Например, id радиостанции 1
+    };
   </script>
 </body>
 </html>
