@@ -1,1 +1,14 @@
-<p>album-tracks works!</p>
+<div class="album-tracks">
+    <h2>Треки альбома №{{ albumId }}</h2>
+  
+    @for (track of tracks_album; track $index) {
+      <div class="track-card">
+        <div class="track-info">
+          <h3>{{ track.title }}</h3>
+          <p>Слушателей: {{ track.listenersCount }}</p>
+          <p>Track : {{ track. title}}</p>
+        </div>
+      </div>
+    }
+  </div>
+  

@@ -24,6 +24,21 @@ public application$ = this.applications.asObservable();
 
 
 constructor() { }
+UpdateRotationStatus(payload: { applicationId: number; newStatus: string }): Promise<void> {
+  return fetch(`${API_URLS.UPDATE_APPLICATION}`, {
+    method: 'PUT', // или 'POST', если у тебя так настроено
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include', // если нужна авторизация через cookie
+    body: JSON.stringify(payload)
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error('Ошибка при обновлении статуса');
+    }
+  });
+}
+
 
 async GetAllRotations(){
   try {

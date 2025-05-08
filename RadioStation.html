@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Радиостанция Rock FM</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .track { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+    button { padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h1>Радиостанция «Волна FM»</h1>
+
+  <div class="track">
+    <h3>Трек: Ветер свободы</h3>
+    <p>Исполнитель: Артист А</p>
+    <button onclick="listenTrack(1, 101)">▶️ Прослушать</button>
+  </div>
+
+  <div class="track">
+    <h3>Трек: Город спит</h3>
+    <p>Исполнитель: Артист Б</p>
+    <button onclick="listenTrack(2, 101)">▶️ Прослушать</button>
+  </div>
+
+  <script>
+    function listenTrack(trackId, radioStationId) {
+      fetch('https://example.com/api/radio/play-track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ trackId, radioStationId })
+      }).then(res => {
+        if (res.ok) alert('Прослушивание учтено!');
+        else alert('Ошибка при отправке запроса');
+      });
+    }
+  </script>
+</body>
+</html>

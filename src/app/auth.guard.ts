@@ -13,13 +13,16 @@ export const authGuard: CanActivateFn = (route, state) => {
       router.navigate(['/login']);
       return false; // Запрещаем доступ
     }
-    const role = regService.GetCurrentRole();
+    const role = localStorage.getItem('role');
+if(role){
+
 
     // Если пользователь админ и не на админской панели
     if (role === 'admin' ) {
       router.navigate(['/adminka']);
       return false; // Запрещаем доступ к текущему маршруту
     }
+  }
 
 
     return true; // Если все проверки пройдены, разрешаем доступ

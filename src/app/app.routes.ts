@@ -55,6 +55,7 @@ export const routes: Routes = [
   {
     path: 'system',
     component: InSystemComponent,
+    canActivate: [authGuard],
     children: [
       { path: 'ArtistTracks', component: TracksComponent },
       { path: 'bio', component: ArtistBioComponent },

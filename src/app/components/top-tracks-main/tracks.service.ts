@@ -127,6 +127,23 @@ export class TracksService {
   
     return await response;
   }
+  async GetALbumTracks(Id: Number): Promise<any> {
+   
+    const response = await fetch(`${API_URLS.GET_ALBUM_TRACKS}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ Id }) // Передаём ID в теле запроса
+    });
+  
+    if (!response.ok) {
+      throw new Error('Ошибка при получении треков альбома');
+    }
+  
+    return await response;
+  }
   async GetMoney(id: Number): Promise<any> {
     const response = await fetch(`${API_URLS.GET_ALL_ROYALTY}`, {
       method: 'POST',

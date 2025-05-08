@@ -26,6 +26,8 @@ export const API_URLS = {
     ALL_ALBUMS:"http://localhost:8082/api/v2/Album/GetAllAlbums",
     GET_ALL_ROYALTY_ARTIST:"http://localhost:8082/api/v2/Admin/GetAllArtistsIncome",
     ADD_ROTATION:"http://localhost:8082/api/v2/Radio/AddRotation",
-    ALL_ROTATIONS:"http://localhost:8082/api/v2/Radio/GetAllRotations"
+    ALL_ROTATIONS:"http://localhost:8082/api/v2/Radio/GetAllRotations",
+    UPDATE_APPLICATION:"http://localhost:8082/api/v2/Radio/UpdateStatus",
+    GET_ALBUM_TRACKS:"http://localhost:8082/api/v2/Album/GetTracksALbum"
   };
   
