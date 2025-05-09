@@ -141,25 +141,32 @@ export class TracksComponent {
 
   // Метод для добавления альбома
   async addAlbum() {
-    if (this.albumForm.invalid || this.albumTrackFiles.some(f => !f)) {
+    console.log(this.albumTrackFiles);
+console.log(this.albumForm.value.tracks.length);
+
+    // Проверка формы и файлов
+    if (this.albumForm.invalid ) {
       alert('Пожалуйста, заполните все поля и прикрепите аудиофайлы для всех треков.');
       return;
     }
   
     const formData = new FormData();
   
+    // Добавляем данные альбома
     formData.append('Name', this.albumForm.value.Name);
     formData.append('releaseDate', this.albumForm.value.releaseDate);
     formData.append('ArtistId', this.selected_artist.id.toString());
   
+    // Добавляем данные для каждого трека
     this.albumForm.value.tracks.forEach((track: any, index: number) => {
       formData.append(`tracks[${index}].title`, track.title);
       formData.append(`tracks[${index}].genreTrack`, track.genreTrack);
-      formData.append(`tracks[${index}].file`, this.albumTrackFiles[index]);
+      formData.append(`tracks[${index}].file`, this.albumTrackFiles[index]); // Прикрепляем файлы
     });
   
     try {
-      const result = await this.tracksService.AddAlbumWithTracks(formData);
+
+      const result = await this.tracksService.AddAlbumWithTracks(formData); // Вызов метода для добавления альбома
       console.log('Альбом успешно добавлен:', result);
       alert('Альбом успешно добавлен!');
     } catch (error) {
@@ -167,5 +174,13 @@ export class TracksComponent {
       alert('Произошла ошибка при добавлении альбома.');
     }
   }
+  onTrackFileSelected(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.albumTrackFiles[index] = input.files[0]; // Сохраняем файл для этого трека
+      console.log('Выбранный файл для трека:', this.albumTrackFiles[index]);
+    }
+  }
+  
   
 }

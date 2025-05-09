@@ -3,6 +3,7 @@ import { ProviderService } from '../components/account/provider.service';
 import { RegistrationService } from '../registration/RegistrationService';
 import { Router,RouterModule } from '@angular/router';
 import { TracksService } from '../components/top-tracks-main/tracks.service';
+import { Artist } from '../components/Artist';
 @Component({
   selector: 'app-in-system',
   standalone: true,
@@ -12,13 +13,20 @@ templateUrl: './in-system.component.html',
 })
 export class InSystemComponent {
   name:string|null=''
+  selected_artist:Artist={id:'',name:''};
   royalty:Number=0;
 constructor(public provide:ProviderService,private registr:RegistrationService,private router:Router,private tracksService:TracksService){}
 async ngOnInit(){
+  this.tracksService.selectedArtist$.subscribe((artist: Artist | null) => {
+    if (artist) {
+      this.selected_artist = artist;
+    }
+  });
   this.tracksService.artistName$.subscribe(name=>{
     this.name=name;
   })
-  const money= await this.tracksService.GetMoney(Number(this.tracksService.selected_artist.id));
+  console.log(this.tracksService.selected_artist.id);
+  const money= await this.tracksService.GetMoney(Number(this.selected_artist.id));
 const data=await money.json();
   this.royalty=data;
 

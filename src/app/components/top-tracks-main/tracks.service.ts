@@ -233,22 +233,21 @@ export class TracksService {
     }
   }
 
-  async AddAlbumWithTracks(albumData: any): Promise<any> {
+  async AddAlbumWithTracks(formData: FormData): Promise<any> {
     const response = await fetch(`${API_URLS.ADD_ALBUM_WITH_TRACKS}`, {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(albumData),
+      body: formData,
     });
-
+  
     if (!response.ok) {
       throw new Error('Ошибка при добавлении альбома');
     }
-
+  
     return await response.json();
   }
+  
+
   async getAllAlbums(): Promise<AlbumInfo[]> {
     const response = await fetch(`${API_URLS.ALL_ALBUMS}`, {
       method: 'GET',

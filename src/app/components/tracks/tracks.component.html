@@ -72,7 +72,7 @@
             </div>
             <div class="form-field">
               <label>Аудиофайл:</label>
-              <input type="file"  accept="audio/*" />
+              <input type="file" (change)="onTrackFileSelected($event, $index)"  accept="audio/*" />
             </div>
           </div>
         }

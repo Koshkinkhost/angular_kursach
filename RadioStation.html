@@ -19,6 +19,7 @@
     .track {
       background-color: white;
       border-radius: 10px;
+      
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
@@ -71,64 +72,90 @@
 
   <script>
     // Функция для загрузки треков по радиостанции
-   // Функция для загрузки треков по радиостанции
-function fetchTracksByRadioStation(id) {
-  document.getElementById('loader').style.display = 'block'; // Показываем индикатор загрузки
+    function fetchTracksByRadioStation(id) {
+      document.getElementById('loader').style.display = 'block'; // Показываем индикатор загрузки
 
-  fetch('http://localhost:8082/api/v2/Track/GetTracksByStation', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-   
-  })
-    .then(res => {
-      console.log('Ответ от сервера:', res);
-      if (!res.ok) {
-        throw new Error('Ошибка на сервере: ' + res.statusText);
-      }
-      return res.text(); // Читаем ответ как текст, чтобы проверить его
-    })
-    .then(data => {
-      console.log('Ответ от сервера:', data); // Логируем текст ответа
-      try {
-        const jsonData = JSON.parse(data); // Преобразуем текст в JSON
-        const trackList = document.getElementById('track-list');
-        trackList.innerHTML = ''; // Очищаем контейнер перед добавлением треков
+      fetch('http://localhost:8082/api/v2/Track/GetTracksByStation', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(res => {
+          console.log('Ответ от сервера:', res);
+          if (!res.ok) {
+            throw new Error('Ошибка на сервере: ' + res.statusText);
+          }
+          return res.text(); // Читаем ответ как текст, чтобы проверить его
+        })
+        .then(data => {
+          console.log('Ответ от сервера:', data); // Логируем текст ответа
+          try {
+            const jsonData = JSON.parse(data); // Преобразуем текст в JSON
+            const trackList = document.getElementById('track-list');
+            trackList.innerHTML = ''; // Очищаем контейнер перед добавлением треков
 
-        // Добавляем каждый трек в DOM
-        jsonData.forEach(track => {
-          const trackElement = document.createElement('div');
-          trackElement.classList.add('track');
-          trackElement.innerHTML = `
-            <h3 class="track-title">${track.title}</h3>
-            <p class="track-artist">👤 ${track.track_Artist}</p>
-            <p class="track-genre">🎵 ${track.genreTrack}</p>
-            <audio controls id="audio-${track.trackId}" class="track-audio">
-              <source src="http://localhost:8082/api/v2${track.url}" type="audio/mp3">
-              Ваш браузер не поддерживает аудио.
-            </audio>
-            <p>Прослушано: ${track.listeners_count} раз</p>
-          `;
-          trackList.appendChild(trackElement);
+            // Добавляем каждый трек в DOM
+            jsonData.forEach(track => {
+              const trackElement = document.createElement('div');
+              trackElement.classList.add('track');
+              trackElement.innerHTML = `
+                <h3 class="track-title">${track.title}</h3>
+                <p class="track-artist">👤 ${track.track_Artist}</p>
+                <p class="track-genre">🎵 ${track.genreTrack}</p>
+                <audio controls id="audio-${track.trackId}" class="track-audio">
+                  <source src="http://localhost:8082/api/v2${track.url}" type="audio/mp3">
+                  Ваш браузер не поддерживает аудио.
+                </audio>
+                <p>Прослушано: <span id="listeners-${track.trackId}">${track.listeners_count}</span> раз</p>
+              `;
+              trackList.appendChild(trackElement);
+
+              // Добавляем обработчик события play для каждого аудиотрека
+              const audioElement = document.getElementById(`audio-${track.trackId}`);
+              audioElement.addEventListener('play', function() {
+                incrementPlays(track.trackId); // При воспроизведении трека увеличиваем счетчик прослушиваний
+              });
+            });
+
+            document.getElementById('loader').style.display = 'none'; // Прячем индикатор загрузки
+          } catch (err) {
+            console.error('Ошибка парсинга JSON:', err);
+            document.getElementById('loader').style.display = 'none';
+            alert('Ошибка при загрузке данных: ' + err.message);
+          }
+        })
+        .catch(err => {
+          document.getElementById('loader').style.display = 'none';
+          alert('Ошибка при загрузке данных: ' + err.message);
         });
+    }
 
-        document.getElementById('loader').style.display = 'none'; // Прячем индикатор загрузки
-      } catch (err) {
-        console.error('Ошибка парсинга JSON:', err);
-        document.getElementById('loader').style.display = 'none';
-        alert('Ошибка при загрузке данных: ' + err.message);
-      }
-    })
-    .catch(err => {
-      document.getElementById('loader').style.display = 'none';
-      alert('Ошибка при загрузке данных: ' + err.message);
-    });
-}
-
+    // Функция для увеличения счетчика прослушиваний
+    function incrementPlays(trackId) {
+      fetch('http://localhost:8082/api/v2/Track/IncrementListens', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ trackId: trackId }) // Передаем trackId в теле запроса
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Ошибка на сервере: ' + res.statusText);
+          }
+          
+        })
+        .then(data => {
+          const listenersCountElement = document.getElementById(`listeners-${trackId}`);
+          listenersCountElement.textContent = data.listeners_count; // Обновляем количество прослушиваний
+        })
+        .catch(err => {
+          alert('Ошибка при увеличении счетчика прослушиваний: ' + err.message);
+        });
+    }
 
     // Пример вызова метода для конкретной радиостанции
-    // Тут можно передать id радиостанции, например, для "Волна FM"
     window.onload = function() {
       fetchTracksByRadioStation(1); // Например, id радиостанции 1
     };
