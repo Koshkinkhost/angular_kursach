@@ -30,7 +30,7 @@
             <p class="track-genre">🎵{{ t.genreTrack }}</p>
             <audio controls (play)="onPlay(t)">
               @if (t.audioUrl) {
-                <source 
+                <source controls (play)="onPlay(t)" 
                 [src]="this.base_url + t.audioUrl "
                 type="audio/mp3">
               } @else {

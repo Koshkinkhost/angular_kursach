@@ -33,6 +33,17 @@ base_url:string="http://localhost:8082/api/v2";
   isBase64(str: string): boolean {
     return /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/.test(str);
   }
+  async onPlay(t: any) {
+    try {
+      await this.trackService.IncrementPlays(t.trackId);
+      t.listenersCount += 1; // Обновляем локально
+    } catch (error) {
+      console.error('Ошибка при увеличении прослушиваний', error);
+    }
+    setTimeout(() => {
+      this.lastPlayedTrackId = null;
+    }, 5000);
+  }
   mapToTrack(data: any): EditTracks {
     return {
       trackId: Number(data.trackId),
@@ -47,22 +58,7 @@ base_url:string="http://localhost:8082/api/v2";
     };
   }
 
-async onPlay(track: any) {
-  if (this.lastPlayedTrackId === track.id) return;
 
-  this.lastPlayedTrackId = track.id;
-  track.listenersCount++;
-
-  try {
-    await this.trackService.IncrementPlays(track.id);
-  } catch (err) {
-    console.error('Ошибка при увеличении прослушиваний');
-  }
-
-  setTimeout(() => {
-    this.lastPlayedTrackId = null;
-  }, 5000);
-}
 
   async reset() {
     this.searchControl.setValue('');

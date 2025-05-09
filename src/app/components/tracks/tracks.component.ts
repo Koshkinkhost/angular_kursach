@@ -16,6 +16,8 @@ import { Artist } from '../Artist';
   styleUrls: ['./tracks.component.css']
 })
 export class TracksComponent {
+  albumTrackFiles: File[] = [];
+
   selectedContentType: 'track' | 'album' = 'track'; // Тип добавляемого контента
   trackForm: FormGroup;
   tracks:EditTracks[]=[];
@@ -139,26 +141,25 @@ export class TracksComponent {
 
   // Метод для добавления альбома
   async addAlbum() {
-    if (this.albumForm.invalid) {
-      alert('Пожалуйста, заполните все поля.');
+    if (this.albumForm.invalid || this.albumTrackFiles.some(f => !f)) {
+      alert('Пожалуйста, заполните все поля и прикрепите аудиофайлы для всех треков.');
       return;
     }
-
-    // Создаем данные альбома
-    const albumData = {
-      ArtistId: Number(),
-      Name: this.albumForm.value.Name, // Название альбома
-      releaseDate: this.albumForm.value.releaseDate, // Дата выпуска
-      tracks: this.albumForm.value.tracks.map((track: any) => ({
-        ArtistId: Number(this.tracksService.selected_artist.id),
-        title: track.title, // Название трека
-        Genre_track: track.genreTrack, // Жанр трека
-        Listeners_count: 0, // По умолчанию 0 прослушиваний
-      })),
-    };
-
+  
+    const formData = new FormData();
+  
+    formData.append('Name', this.albumForm.value.Name);
+    formData.append('releaseDate', this.albumForm.value.releaseDate);
+    formData.append('ArtistId', this.selected_artist.id.toString());
+  
+    this.albumForm.value.tracks.forEach((track: any, index: number) => {
+      formData.append(`tracks[${index}].title`, track.title);
+      formData.append(`tracks[${index}].genreTrack`, track.genreTrack);
+      formData.append(`tracks[${index}].file`, this.albumTrackFiles[index]);
+    });
+  
     try {
-      const result = await this.tracksService.AddAlbumWithTracks(albumData);
+      const result = await this.tracksService.AddAlbumWithTracks(formData);
       console.log('Альбом успешно добавлен:', result);
       alert('Альбом успешно добавлен!');
     } catch (error) {
@@ -166,4 +167,5 @@ export class TracksComponent {
       alert('Произошла ошибка при добавлении альбома.');
     }
   }
+  
 }
