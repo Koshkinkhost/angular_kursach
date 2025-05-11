@@ -16,7 +16,7 @@ import { Artist } from '../Artist';
   styleUrls: ['./tracks.component.css']
 })
 export class TracksComponent {
-  albumTrackFiles: File[] = [];
+  albumTrackFiles: (File | null)[] = [];
 
   selectedContentType: 'track' | 'album' = 'track'; // Тип добавляемого контента
   trackForm: FormGroup;
@@ -103,9 +103,11 @@ export class TracksComponent {
   addTrackField() {
     const trackGroup = this.fb.group({
       title: ['', Validators.required],
-      genreTrack: ['', Validators.required], // Переименовано из genre_track
+      genreTrack: ['', Validators.required],
     });
+  
     this.tracksFormArray.push(trackGroup);
+    this.albumTrackFiles.push(null); // Добавляем "пустое место" под файл
   }
 
   // Метод для добавления трека
@@ -141,39 +143,47 @@ export class TracksComponent {
 
   // Метод для добавления альбома
   async addAlbum() {
-    console.log(this.albumTrackFiles);
-console.log(this.albumForm.value.tracks.length);
+    
+  
+    const tracksDto = this.albumForm.value.tracks.map((track: any, index: number) => ({
+      title: track.title,
+      Genre_track: track.genreTrack,
+      listeners_count: 0 // или другое значение по умолчанию
+    }));
+  
+    const albumDto = {
+      Title: this.albumForm.value.Name,
+      ReleaseDate: this.albumForm.value.releaseDate,
+      ArtistId: Number(this.selected_artist.id),
+      Tracks: tracksDto
+    };
+    console.log(this.albumForm.value.tracks);
 
-    // Проверка формы и файлов
-    if (this.albumForm.invalid ) {
-      alert('Пожалуйста, заполните все поля и прикрепите аудиофайлы для всех треков.');
-      return;
-    }
-  
     const formData = new FormData();
+    formData.append('albumData', JSON.stringify(albumDto)); // 👈 КЛЮЧЕВОЙ момент
   
-    // Добавляем данные альбома
-    formData.append('Name', this.albumForm.value.Name);
-    formData.append('releaseDate', this.albumForm.value.releaseDate);
-    formData.append('ArtistId', this.selected_artist.id.toString());
-  
-    // Добавляем данные для каждого трека
-    this.albumForm.value.tracks.forEach((track: any, index: number) => {
-      formData.append(`tracks[${index}].title`, track.title);
-      formData.append(`tracks[${index}].genreTrack`, track.genreTrack);
-      formData.append(`tracks[${index}].file`, this.albumTrackFiles[index]); // Прикрепляем файлы
+    this.albumTrackFiles.forEach((file, index) => {
+      if (file) {
+        formData.append('audioFiles', file); // 👈 важно: одинаковый ключ для всех файлов
+      }
     });
   
     try {
-
-      const result = await this.tracksService.AddAlbumWithTracks(formData); // Вызов метода для добавления альбома
-      console.log('Альбом успешно добавлен:', result);
+      const result = await this.tracksService.AddAlbumWithTracks(formData);
       alert('Альбом успешно добавлен!');
+      this.albumForm.reset();
+      this.albumTrackFiles = [];
+      this.tracksFormArray.clear();
     } catch (error) {
       console.error('Ошибка при добавлении альбома:', error);
       alert('Произошла ошибка при добавлении альбома.');
     }
   }
+  
+  
+  
+  
+  
   onTrackFileSelected(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
