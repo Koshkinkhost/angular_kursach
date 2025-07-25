@@ -29,7 +29,7 @@ export class FilialsComponent {
   constructor(
     public studios: StudiosService,
     public registr:RegistrationService,
-    private cdr: ChangeDetectorRef // Для явного обновления компонента
+    private cdr: ChangeDetectorRef 
   ) {}
 
   // Инициализация компонента

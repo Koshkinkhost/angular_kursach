@@ -150,9 +150,7 @@
           const listenersCountElement = document.getElementById(`listeners-${trackId}`);
           listenersCountElement.textContent = data.listeners_count; // Обновляем количество прослушиваний
         })
-        .catch(err => {
-          alert('Ошибка при увеличении счетчика прослушиваний: ' + err.message);
-        });
+        ;
     }
 
     // Пример вызова метода для конкретной радиостанции

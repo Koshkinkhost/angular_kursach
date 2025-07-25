@@ -114,12 +114,11 @@ base_url:string="http://localhost:8082/api/v2";
   }
 
   saveTrack(track: EditTracks) {
-    console.log(track.trackId);
-    // Здесь можно вызывать service для сохранения в БД
-    console.log("Сохраняем трек:", track);
-    this.trackService.editTrack(track).then(updatedTracks => {
-      this.tracks = updatedTracks; // Обновляем список треков в компоненте
-      track.isEditing = false;
-    });
+   this.trackService.editTrack(track).then(() => {
+    track.isEditing = false;
+
+    // Принудительно триггерим обновление: новая ссылка на массив
+    this.tracks = [...this.tracks];
+  });
   }
 }
